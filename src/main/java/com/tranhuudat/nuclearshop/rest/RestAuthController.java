@@ -1,12 +1,17 @@
 package com.tranhuudat.nuclearshop.rest;
 
 import com.tranhuudat.nuclearshop.request.LoginRequest;
+import com.tranhuudat.nuclearshop.request.RefreshTokenRequest;
 import com.tranhuudat.nuclearshop.request.RegisterRequest;
 import com.tranhuudat.nuclearshop.response.AuthResponse;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.service.AuthService;
+import com.tranhuudat.nuclearshop.service.RefreshTokenService;
+import com.tranhuudat.nuclearshop.type.YesNoStatus;
+import com.tranhuudat.nuclearshop.util.SystemMessage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +25,7 @@ import java.time.LocalDateTime;
 public class RestAuthController {
 
     private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
     public ResponseEntity<BaseResponse<?>> signup(@RequestBody @Valid RegisterRequest registerRequest) {
@@ -38,14 +44,17 @@ public class RestAuthController {
     }
 
     @PostMapping("/refresh/token")
-    public ResponseEntity<String> refreshTokens() {
-
-        return null;
+    public ResponseEntity<AuthResponse> refreshTokens(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
+        return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
-
-        return null;
+    public ResponseEntity<BaseResponse<?>> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+        return ResponseEntity.status(HttpStatus.OK).body(BaseResponse.builder()
+                .code(YesNoStatus.YES)
+                .message(SystemMessage.MESSAGE_DELETE_REFRESH_TOKEN)
+                .body(true)
+                .build());
     }
 }

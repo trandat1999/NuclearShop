@@ -8,6 +8,7 @@ import com.tranhuudat.nuclearshop.repository.NotificationEmailRepository;
 import com.tranhuudat.nuclearshop.repository.UserRepository;
 import com.tranhuudat.nuclearshop.repository.VerificationTokenRepository;
 import com.tranhuudat.nuclearshop.request.LoginRequest;
+import com.tranhuudat.nuclearshop.request.RefreshTokenRequest;
 import com.tranhuudat.nuclearshop.request.RegisterRequest;
 import com.tranhuudat.nuclearshop.response.AuthResponse;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
@@ -17,12 +18,16 @@ import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -120,8 +125,32 @@ public class AuthService {
         return AuthResponse.builder()
                 .accessToken(token)
                 .expiresAt(LocalDateTime.now().plusSeconds(ConstUtil.TIMEOUT_TOKEN))
-                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
+                .refreshToken(refreshTokenService.generateRefreshToken(loginRequest.getUsername()).getToken())
                 .username(loginRequest.getUsername())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        Jwt principal = (Jwt) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepository.findByUsername(principal.getSubject())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getSubject()));
+    }
+
+    public AuthResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.validateRefreshToken(refreshTokenRequest);
+        String token = jwtProvider.generateTokenWithUsername(refreshTokenRequest.getUsername());
+        return AuthResponse.builder()
+                .accessToken(token)
+                .refreshToken(refreshTokenRequest.getRefreshToken())
+                .expiresAt(LocalDateTime.now().plusSeconds(ConstUtil.TIMEOUT_TOKEN))
+                .username(refreshTokenRequest.getUsername())
+                .build();
+    }
+
+    public boolean isLoggedIn() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 }

@@ -23,4 +23,10 @@ public class RefreshToken extends BaseEntity{
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name ="username")
+    private String username;
+
+    @Column(name = "expired_date")
+    private LocalDateTime expiredDate;
 }

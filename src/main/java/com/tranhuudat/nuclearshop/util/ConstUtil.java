@@ -6,5 +6,6 @@ public class ConstUtil {
     public static String API = "api";
     public static String SLASH = "/";
     public static String URL_VERIFICATION_TOKEN = "auth/accountVerification";
-    public static long TIMEOUT_TOKEN = 300000L;
+    public static long TIMEOUT_TOKEN = 300L;
+    public static long TIMEOUT_REFRESH_TOKEN = 1800L;
 }

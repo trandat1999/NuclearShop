@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {IllegalStateException.class, IllegalArgumentException.class, IllegalAccessException.class,
-            DataIntegrityViolationException.class,NuclearShopException.class})
+            DataIntegrityViolationException.class,NuclearShopException.class, UsernameNotFoundException.class})
     public final ResponseEntity<ErrorResponse> handleAllException(Exception ex, WebRequest webRequest) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .path(webRequest.getContextPath())
