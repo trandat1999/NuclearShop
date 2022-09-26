@@ -5,6 +5,7 @@ import com.tranhuudat.nuclearshop.exception.NuclearShopException;
 import com.tranhuudat.nuclearshop.repository.RefreshTokenRepository;
 import com.tranhuudat.nuclearshop.request.RefreshTokenRequest;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
+import com.tranhuudat.nuclearshop.util.SystemMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,7 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     public RefreshToken generateRefreshToken(String username) {
-        RefreshToken refreshToken = refreshTokenRepository.findByUsername(username).orElse(null);
-        if(refreshToken!=null){
-            refreshTokenRepository.delete(refreshToken);
-        }
+        refreshTokenRepository.findByUsername(username).ifPresent(refreshTokenRepository::delete);
         RefreshToken refreshTokenNew = RefreshToken.builder()
                 .token(UUID.randomUUID().toString())
                 .createdAt(LocalDateTime.now())
@@ -30,8 +28,11 @@ public class RefreshTokenService {
     }
 
     void validateRefreshToken(RefreshTokenRequest refreshTokenRequest) {
-        RefreshToken refreshToken =  refreshTokenRepository.findByTokenAndUsername(refreshTokenRequest.getRefreshToken(), refreshTokenRequest.getUsername())
-                .orElseThrow(() -> new NuclearShopException("Invalid refresh Token"));
+        RefreshToken refreshToken = refreshTokenRepository.findByTokenAndUsername(refreshTokenRequest.getRefreshToken(), refreshTokenRequest.getUsername())
+                .orElseThrow(() -> new NuclearShopException(SystemMessage.MESSAGE_INVALID_REFRESH_TOKEN));
+        if (refreshToken.getExpiredDate().isBefore(LocalDateTime.now())) {
+            throw new NuclearShopException(SystemMessage.MESSAGE_REFRESH_TOKEN_EXPIRED);
+        }
         refreshToken.setExpiredDate(LocalDateTime.now().plusSeconds(ConstUtil.TIMEOUT_REFRESH_TOKEN));
         refreshTokenRepository.save(refreshToken);
     }

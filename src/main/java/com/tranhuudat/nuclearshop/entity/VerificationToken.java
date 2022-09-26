@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VerificationToken extends BaseEntity{
+public class VerificationToken extends BaseEntity {
 
     @Column(name = "token")
     private String token;

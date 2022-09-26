@@ -20,4 +20,12 @@ public class MailContentService {
         context.setVariable("host", ConstUtil.HOST_URL);
         return templateEngine.process("mail/mailTemplate", context);
     }
+
+    public String buildContentResetPassword(String password) {
+        Context context = new Context();
+        context.setVariable("currentYear", LocalDateTime.now().getYear());
+        context.setVariable("pass", password);
+        context.setVariable("host", ConstUtil.HOST_URL);
+        return templateEngine.process("mail/resetPassword", context);
+    }
 }

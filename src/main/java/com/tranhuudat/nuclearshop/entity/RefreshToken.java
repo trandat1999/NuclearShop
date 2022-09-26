@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "tbl_refresh_token")
-public class RefreshToken extends BaseEntity{
+public class RefreshToken extends BaseEntity {
 
     @Column(name = "token")
     private String token;
@@ -24,7 +24,7 @@ public class RefreshToken extends BaseEntity{
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name ="username")
+    @Column(name = "username")
     private String username;
 
     @Column(name = "expired_date")

@@ -1,8 +1,7 @@
 package com.tranhuudat.nuclearshop.entity;
 
 import com.tranhuudat.nuclearshop.type.Gender;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,6 +10,9 @@ import java.util.Date;
 @Getter
 @Entity
 @Table(name = "tbl_person")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Person extends BaseEntity {
 
     @Column(name = "first_name")

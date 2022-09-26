@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    @Pattern(regexp = "[a-zA-Z0-9]+" , message = "username only characters and numbers")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "username only characters and numbers")
     @NotNull(message = "username cannot be null")
     private String username;
 

@@ -15,14 +15,14 @@ import java.util.Set;
 @Table(name = "tbl_user")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements UserDetails{
+@Builder
+public class User extends BaseEntity implements UserDetails {
 
-    @Column(name = "username",length = 100,nullable = false, unique = true)
+    @Column(name = "username", length = 100, nullable = false, unique = true)
     private String username;
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "email")
     private String email;
@@ -34,7 +34,7 @@ public class User extends BaseEntity implements UserDetails{
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet();
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "person_id")
     private Person person;
 

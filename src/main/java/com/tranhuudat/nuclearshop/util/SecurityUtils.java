@@ -16,7 +16,7 @@ public class SecurityUtils {
             return null;
         } else {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            return (User)authentication.getPrincipal();
+            return (User) authentication.getPrincipal();
         }
     }
 

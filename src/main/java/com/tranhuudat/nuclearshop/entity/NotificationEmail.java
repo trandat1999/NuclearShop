@@ -12,15 +12,15 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificationEmail extends BaseEntity{
+public class NotificationEmail extends BaseEntity {
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "subject",length = 500)
+    @Column(name = "subject", length = 500)
     private String subject;
 
-    @Column(name = "content",columnDefinition="TEXT")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Enumerated(EnumType.STRING)
