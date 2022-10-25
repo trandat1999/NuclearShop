@@ -35,6 +35,9 @@ public class ApplicationStartListener implements ApplicationListener<ContextRefr
         if (env.containsProperty(ConstUtil.PATH_FILE_IMAGE_PROPERTY) && env.getProperty(ConstUtil.PATH_FILE_IMAGE_PROPERTY) != null) {
             ConstUtil.FILE_PATH_IMAGE = env.getProperty(ConstUtil.PATH_FILE_IMAGE_PROPERTY);
         }
+        if (env.containsProperty(ConstUtil.HOST_URL_PROPERTY) && env.getProperty(ConstUtil.HOST_URL_PROPERTY) != null) {
+            ConstUtil.HOST_URL = env.getProperty(ConstUtil.HOST_URL_PROPERTY);
+        }
         createAdminUser();
     }
 

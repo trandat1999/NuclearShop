@@ -14,6 +14,8 @@ public class ConstUtil {
     public static final String ADMIN_EMAIL = "nuclearshop123@gmail.com";
     //system_properties
     public static final String PATH_FILE_IMAGE_PROPERTY = "file.path.image";
+
+    public static final String HOST_URL_PROPERTY = "url.host";
     //regex
     public static final String REGEX_PHONE_NUMBER = "((84|0|'+'84)[3|5|7|8|9])+([0-9]{8})";
     public static final int TIME_MINUTES_EXPIRED_VERIFICATION_TOKEN = 5;
@@ -38,4 +40,6 @@ public class ConstUtil {
     public static String FILE_PATH_IMAGE = "";
     public static String HOST_URL = "http://localhost:8080";
     public static String URL_VERIFICATION_TOKEN = "auth/accountVerification";
+
+    public static final String URL_PUBLIC_FILE_DOWNLOAD = "/api/v1/publish/files/";
 }

@@ -5,13 +5,16 @@ import com.tranhuudat.nuclearshop.repository.FileRepository;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.response.FileResponse;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
+import com.tranhuudat.nuclearshop.util.FileUtils;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import com.tranhuudat.nuclearshop.util.SystemVariable;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,7 +35,7 @@ public class FileService extends BaseService{
         String randomUUID = UUID.randomUUID().toString();
         String filename = multipartFile.getOriginalFilename();
         if(!StringUtils.hasText(filename)){
-            return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_FILE_NAME_INVALID,null, Locale.ROOT));
+            return getResponse400(getMessage(SystemMessage.MESSAGE_FILE_NAME_INVALID));
         }
         int dot = filename.lastIndexOf(".");
         String firstString = filename.substring(0,dot);
@@ -43,7 +47,7 @@ public class FileService extends BaseService{
             stream.write(multipartFile.getBytes());
             stream.close();
         } catch (IOException e) {
-            return getResponse500(messageSource.getMessage(SystemMessage.MESSAGE_WRITE_FILE_ERROR,new Object[]{e.getMessage()}, Locale.ROOT));
+            return getResponse500(getMessage(SystemMessage.MESSAGE_WRITE_FILE_ERROR, e.getMessage()));
         }
         File file = File.builder()
                 .fileSize(multipartFile.getSize())
@@ -55,5 +59,16 @@ public class FileService extends BaseService{
         ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
         FileResponse fileResponse = projectionFactory.createProjection(FileResponse.class, file);
         return getResponse201(fileResponse,getMessage(SystemMessage.MESSAGE_CREATE_SUCCESS, SystemVariable.FILE));
+    }
+
+    public BaseResponse getFile(Long id){
+        Optional<File> fileOptional = fileRepository.findById(id);
+        if(fileOptional.isPresent()){
+            File file = fileOptional.get();
+            ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+            FileResponse fileResponse = projectionFactory.createProjection(FileResponse.class, file);
+            return getResponse200(fileResponse,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
+        }
+        return getResponse404(getMessage(SystemMessage.MESSAGE_FILE_NOT_FOUND));
     }
 }

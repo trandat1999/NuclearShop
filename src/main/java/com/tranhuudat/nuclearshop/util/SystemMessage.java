@@ -18,6 +18,10 @@ public class SystemMessage {
 
     public static final String MESSAGE_WRITE_FILE_ERROR = "nuclear.shop.message.WriteFileError";
 
+    public static final String MESSAGE_FILE_NOT_FOUND = "nuclear.shop.message.FileNotFound";
+
+    public static final String MESSAGE_SUCCESS_PROPERTIES = "nuclear.shop.message.Success";
+
     //message app
     public static final String CONTENT_MAIL_REGISTER = "Thanks for registering your account. Link activity will be expired after 5 minutes";
     public static final String SUBJECT_MAIL_REGISTER = "Verify your email address";

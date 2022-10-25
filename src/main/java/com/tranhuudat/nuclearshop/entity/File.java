@@ -20,9 +20,6 @@ public class File extends BaseEntity {
     @Column(name = "file_size")
     private Long fileSize;
 
-    @Column(name = "download_url")
-    private String downloadUrl;
-
     @Column(name = "description")
     private String description;
 
