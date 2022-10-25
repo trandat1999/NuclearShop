@@ -1,7 +1,7 @@
 package com.tranhuudat.nuclearshop.repository;
 
 import com.tranhuudat.nuclearshop.entity.User;
-import com.tranhuudat.nuclearshop.response.CurrentUser;
+import com.tranhuudat.nuclearshop.response.CurrentUserResponse;
 import com.tranhuudat.nuclearshop.response.UserResponse;
 import org.hibernate.jpa.TypedParameterValue;
 import org.springframework.data.domain.Page;
@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<UserResponse> getPage(TypedParameterValue keyword, Pageable pageable);
 
     @Query("select u  as user from User u where u.username = :username")
-    CurrentUser getCurrentUser(TypedParameterValue username);
+    CurrentUserResponse getCurrentUser(TypedParameterValue username);
 
     Optional<User> findByUsernameAndEmail(TypedParameterValue username, TypedParameterValue email);
 }

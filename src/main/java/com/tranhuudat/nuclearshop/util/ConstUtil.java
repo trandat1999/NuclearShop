@@ -16,12 +16,26 @@ public class ConstUtil {
     public static final String PATH_FILE_IMAGE_PROPERTY = "file.path.image";
     //regex
     public static final String REGEX_PHONE_NUMBER = "((84|0|'+'84)[3|5|7|8|9])+([0-9]{8})";
-    public static int TIME_MINUTES_EXPIRED_VERIFICATION_TOKEN = 5;
-    public static String HOST_URL = "http://localhost:8080";
-    public static String API = "api";
-    public static String SLASH = "/";
-    public static String URL_VERIFICATION_TOKEN = "auth/accountVerification";
-    public static long TIMEOUT_TOKEN = 300L;
-    public static long TIMEOUT_REFRESH_TOKEN = 1800L;
+    public static final int TIME_MINUTES_EXPIRED_VERIFICATION_TOKEN = 5;
+
+    public static final String API = "api";
+    public static final String SLASH = "/";
+
+    public static final String DOT = ".";
+    public static final String COMMA = ",";
+    public static final String SPACE = " ";
+    public static final String UNDERLINE = "_";
+    public static final String SEMICOLON = ";";
+    public static final String EQUAL = "=";
+    public static final String QUESTION_MARK = "?";
+    public static final String AT = "@";
+    public static final String PLUS = "+";
+    public static final String COLON = ":";
+    public static final String DASH = "-";
+
+    public static final long TIMEOUT_TOKEN = 300L;
+    public static final long TIMEOUT_REFRESH_TOKEN = 1800L;
     public static String FILE_PATH_IMAGE = "";
+    public static String HOST_URL = "http://localhost:8080";
+    public static String URL_VERIFICATION_TOKEN = "auth/accountVerification";
 }

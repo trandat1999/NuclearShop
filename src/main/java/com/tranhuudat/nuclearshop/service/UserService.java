@@ -9,7 +9,7 @@ import com.tranhuudat.nuclearshop.request.RoleRequest;
 import com.tranhuudat.nuclearshop.request.UserRequest;
 import com.tranhuudat.nuclearshop.request.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
-import com.tranhuudat.nuclearshop.response.CurrentUser;
+import com.tranhuudat.nuclearshop.response.CurrentUserResponse;
 import com.tranhuudat.nuclearshop.response.UserResponse;
 import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.SecurityUtils;
@@ -141,7 +141,7 @@ public class UserService extends BaseService {
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityUtils.getPrincipal();
         if (user != null) {
             TypedParameterValue username = new TypedParameterValue(StandardBasicTypes.STRING, user.getUsername());
-            CurrentUser response = userRepository.getCurrentUser(username);
+            CurrentUserResponse response = userRepository.getCurrentUser(username);
             return getResponse200(response, messageSource.getMessage(SystemMessage.MESSAGE_FOUND, new Object[]{SystemVariable.USER}, Locale.ROOT));
         }
         return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_NOT_LOGIN, null, Locale.ROOT));

@@ -56,8 +56,16 @@ public abstract class BaseService {
 
     protected BaseResponse getResponse400(String message) {
         return BaseResponse.builder()
-                .code(HttpStatus.CREATED.value())
-                .status(HttpStatus.CREATED.name())
+                .code(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.name())
+                .message(message)
+                .build();
+    }
+
+    protected BaseResponse getResponse500(String message) {
+        return BaseResponse.builder()
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.name())
                 .message(message)
                 .build();
     }
@@ -98,5 +106,9 @@ public abstract class BaseService {
                 .build();
         notificationEmail = notificationEmailRepository.save(notificationEmail);
         mailService.sendMailResetPassword(notificationEmail);
+    }
+
+    String getMessage(String message,Object... objects){
+        return messageSource.getMessage(message, objects, Locale.ROOT);
     }
 }

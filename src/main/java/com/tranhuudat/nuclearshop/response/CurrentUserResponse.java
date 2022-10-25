@@ -2,7 +2,7 @@ package com.tranhuudat.nuclearshop.response;
 
 import java.util.Set;
 
-public interface CurrentUser {
+public interface CurrentUserResponse {
 
     User getUser();
 

@@ -14,6 +14,10 @@ public class SystemMessage {
     public static final String CONTENT_MAIL_RESET_PASSWORD = "nuclear.shop.message.ResetPassword";
     public static final String MESSAGE_RESET_PASSWORD_SUCCESS = "nuclear.shop.message.ResetPasswordSuccess";
 
+    public static final String MESSAGE_FILE_NAME_INVALID = "nuclear.shop.message.FileNameInvalid";
+
+    public static final String MESSAGE_WRITE_FILE_ERROR = "nuclear.shop.message.WriteFileError";
+
     //message app
     public static final String CONTENT_MAIL_REGISTER = "Thanks for registering your account. Link activity will be expired after 5 minutes";
     public static final String SUBJECT_MAIL_REGISTER = "Verify your email address";
