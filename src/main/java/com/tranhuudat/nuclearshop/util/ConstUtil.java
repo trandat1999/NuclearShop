@@ -40,6 +40,9 @@ public class ConstUtil {
     public static String FILE_PATH_IMAGE = "";
     public static String HOST_URL = "http://localhost:8080";
     public static String URL_VERIFICATION_TOKEN = "auth/accountVerification";
-
     public static final String URL_PUBLIC_FILE_DOWNLOAD = "/api/v1/publish/files/";
+    public static final String MINE_TYPE_DOC_OR_DOT = "application/msword";
+    public static final String MINE_TYPE_DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    public static final String MINE_TYPE_XLS = "application/vnd.ms-excel";
+    public static final String MINE_TYPE_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 }
