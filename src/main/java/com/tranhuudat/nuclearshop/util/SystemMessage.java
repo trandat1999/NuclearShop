@@ -22,6 +22,8 @@ public class SystemMessage {
 
     public static final String MESSAGE_SUCCESS_PROPERTIES = "nuclear.shop.message.Success";
 
+    public static final String MESSAGE_ERROR_UNIQUE_USER_OR_EMAIL = "nuclear.shop.message.ErrorUniqueRegistration";
+
     //message app
     public static final String CONTENT_MAIL_REGISTER = "Thanks for registering your account. Link activity will be expired after 5 minutes";
     public static final String SUBJECT_MAIL_REGISTER = "Verify your email address";

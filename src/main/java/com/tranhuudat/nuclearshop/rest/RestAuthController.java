@@ -8,6 +8,7 @@ import com.tranhuudat.nuclearshop.response.AuthResponse;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.service.AuthService;
 import com.tranhuudat.nuclearshop.service.RefreshTokenService;
+import com.tranhuudat.nuclearshop.service.UserService;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,8 @@ public class RestAuthController {
 
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
+
+    private final UserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity<BaseResponse> signup(@RequestBody @Valid RegisterRequest registerRequest) {
@@ -62,5 +65,15 @@ public class RestAuthController {
     @PostMapping("/reset-password")
     public ResponseEntity<BaseResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest request){
         return ResponseEntity.ok(authService.resetPassword(request));
+    }
+
+    @GetMapping("/check/email/{email}")
+    public ResponseEntity<Boolean> checkEmail(@PathVariable("email") String request){
+        return ResponseEntity.ok(userService.checkExistEmail(request));
+    }
+
+    @GetMapping("/check/username/{username}")
+    public ResponseEntity<Boolean> checkUsername(@PathVariable("username") String request){
+        return ResponseEntity.ok(userService.checkExistUsername(request));
     }
 }

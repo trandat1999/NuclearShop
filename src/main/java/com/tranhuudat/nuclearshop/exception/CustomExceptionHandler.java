@@ -3,6 +3,8 @@ package com.tranhuudat.nuclearshop.exception;
 import com.tranhuudat.nuclearshop.response.ErrorResponse;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,10 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -38,7 +42,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
     @ExceptionHandler(value = {IllegalStateException.class, IllegalArgumentException.class, IllegalAccessException.class,
             DataIntegrityViolationException.class, NuclearShopException.class, UsernameNotFoundException.class})
     public final ResponseEntity<ErrorResponse> handleAllException(Exception ex, WebRequest request) {

@@ -1,5 +1,7 @@
 package com.tranhuudat.nuclearshop.entity;
 
+import com.tranhuudat.nuclearshop.util.anotation.UniqueEmail;
+import com.tranhuudat.nuclearshop.util.anotation.UniqueUsername;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -24,7 +26,7 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email")
+    @Column(name = "email", unique= true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)

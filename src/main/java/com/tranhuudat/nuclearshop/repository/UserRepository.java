@@ -33,4 +33,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     CurrentUserResponse getCurrentUser(TypedParameterValue username);
 
     Optional<User> findByUsernameAndEmail(TypedParameterValue username, TypedParameterValue email);
+
+    long countUserByEmail(String email);
+
+    long countUserByUsername(String username);
 }
