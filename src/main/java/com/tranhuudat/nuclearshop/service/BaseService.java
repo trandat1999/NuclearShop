@@ -54,8 +54,9 @@ public abstract class BaseService {
                 .build();
     }
 
-    protected BaseResponse getResponse400(String message) {
+    protected BaseResponse getResponse400(String message, Object... args) {
         return BaseResponse.builder()
+                .body(args)
                 .code(HttpStatus.BAD_REQUEST.value())
                 .status(HttpStatus.BAD_REQUEST.name())
                 .message(message)

@@ -28,8 +28,6 @@ public class RestAuthController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
 
-    private final UserService userService;
-
     @PostMapping("/signup")
     public ResponseEntity<BaseResponse> signup(@RequestBody @Valid RegisterRequest registerRequest) {
         log.info("api signup request at {}", LocalDateTime.now());
@@ -69,11 +67,11 @@ public class RestAuthController {
 
     @GetMapping("/check/email/{email}")
     public ResponseEntity<Boolean> checkEmail(@PathVariable("email") String request){
-        return ResponseEntity.ok(userService.checkExistEmail(request));
+        return ResponseEntity.ok(authService.checkExistEmail(request));
     }
 
     @GetMapping("/check/username/{username}")
     public ResponseEntity<Boolean> checkUsername(@PathVariable("username") String request){
-        return ResponseEntity.ok(userService.checkExistUsername(request));
+        return ResponseEntity.ok(authService.checkExistUsername(request));
     }
 }

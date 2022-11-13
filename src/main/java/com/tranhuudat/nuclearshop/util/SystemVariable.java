@@ -6,4 +6,6 @@ public class SystemVariable {
     public static final String ROLE = "role";
 
     public static final String FILE = "File";
+    public static final String EMAIL = "email";
+    public static final String USERNAME = "username";
 }

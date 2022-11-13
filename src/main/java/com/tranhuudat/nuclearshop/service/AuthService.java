@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.service;
 
+import com.nimbusds.oauth2.sdk.util.CollectionUtils;
 import com.tranhuudat.nuclearshop.entity.Person;
 import com.tranhuudat.nuclearshop.entity.Role;
 import com.tranhuudat.nuclearshop.entity.User;
@@ -17,6 +18,7 @@ import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
+import com.tranhuudat.nuclearshop.util.SystemVariable;
 import lombok.AllArgsConstructor;
 import org.hibernate.jpa.TypedParameterValue;
 import org.hibernate.type.StandardBasicTypes;
@@ -27,9 +29,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.MapUtils;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -46,6 +51,16 @@ public class AuthService extends BaseService {
     private final MessageSource messageSource;
 
     public BaseResponse register(RegisterRequest registerRequest) {
+        Map<String, String> errors = new HashMap<>();
+        if(checkExistEmail(registerRequest.getEmail())){
+            errors.put(SystemVariable.EMAIL, getMessage(SystemMessage.MESSAGE_ERROR_EXISTS,registerRequest.getEmail()));
+        }
+        if(checkExistUsername(registerRequest.getUsername())){
+            errors.put(SystemVariable.USERNAME, getMessage(SystemMessage.MESSAGE_ERROR_EXISTS,registerRequest.getUsername()));
+        }
+        if(!MapUtils.isEmpty(errors)){
+            return getResponse400(SystemMessage.MESSAGE_BAD_REQUEST, errors);
+        }
         Role userRole = roleRepository.findByName(ConstUtil.USER_ROLE).orElse(Role.builder().name(ConstUtil.USER_ROLE).build());
         Person person = Person.builder()
                 .email(registerRequest.getEmail())
@@ -122,5 +137,15 @@ public class AuthService extends BaseService {
         }
         return getResponse404(messageSource.getMessage(SystemMessage.MESSAGE_USERNAME_EMAIL_NOT_MATCH,
                 new Object[]{request.getUsername(),request.getEmail()} , Locale.ROOT));
+    }
+
+    public boolean checkExistEmail(String email){
+        long count = userRepository.countUserByEmail(email);
+        return count != 0;
+    }
+
+    public boolean checkExistUsername(String email){
+        long count = userRepository.countUserByUsername(email);
+        return count != 0;
     }
 }

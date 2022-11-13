@@ -146,14 +146,4 @@ public class UserService extends BaseService {
         }
         return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_NOT_LOGIN, null, Locale.ROOT));
     }
-
-    public boolean checkExistEmail(String email){
-        long count = userRepository.countUserByEmail(email);
-        return count != 0;
-    }
-
-    public boolean checkExistUsername(String email){
-        long count = userRepository.countUserByUsername(email);
-        return count != 0;
-    }
 }

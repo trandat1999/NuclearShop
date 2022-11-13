@@ -22,7 +22,7 @@ public class SystemMessage {
 
     public static final String MESSAGE_SUCCESS_PROPERTIES = "nuclear.shop.message.Success";
 
-    public static final String MESSAGE_ERROR_UNIQUE_USER_OR_EMAIL = "nuclear.shop.message.ErrorUniqueRegistration";
+    public static final String MESSAGE_ERROR_EXISTS = "nuclear.shop.message.ErrorExist";
 
     //message app
     public static final String CONTENT_MAIL_REGISTER = "Thanks for registering your account. Link activity will be expired after 5 minutes";
@@ -33,6 +33,7 @@ public class SystemMessage {
     public static final String MESSAGE_ACCOUNT_IS_ACTIVE = "Account is currently active";
     public static final String MESSAGE_DELETE_REFRESH_TOKEN = "Refresh Token Deleted Successfully!!";
     public static final String MESSAGE_SUCCESS = "Success";
+    public static final String MESSAGE_BAD_REQUEST = "Bad Request";
     public static final String MESSAGE_INVALID_REQUEST_BODY = "Invalid Request Body";
     public static final String MESSAGE_INVALID_REFRESH_TOKEN = "Invalid Refresh Token";
     public static final String MESSAGE_REFRESH_TOKEN_EXPIRED = "Refresh Token Expired";
