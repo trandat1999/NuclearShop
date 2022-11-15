@@ -64,14 +64,4 @@ public class RestAuthController {
     public ResponseEntity<BaseResponse> resetPassword(@Valid @RequestBody ResetPasswordRequest request){
         return ResponseEntity.ok(authService.resetPassword(request));
     }
-
-    @GetMapping("/check/email/{email}")
-    public ResponseEntity<Boolean> checkEmail(@PathVariable("email") String request){
-        return ResponseEntity.ok(authService.checkExistEmail(request));
-    }
-
-    @GetMapping("/check/username/{username}")
-    public ResponseEntity<Boolean> checkUsername(@PathVariable("username") String request){
-        return ResponseEntity.ok(authService.checkExistUsername(request));
-    }
 }
