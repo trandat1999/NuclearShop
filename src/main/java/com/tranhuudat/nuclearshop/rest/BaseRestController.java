@@ -8,6 +8,7 @@ import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.service.MailService;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 
 import javax.annotation.Resource;
@@ -77,6 +78,6 @@ public abstract class BaseRestController {
     }
 
     String getMessage(String message,Object... objects){
-        return messageSource.getMessage(message, objects, Locale.ROOT);
+        return messageSource.getMessage(message, objects, LocaleContextHolder.getLocale());
     }
 }

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest {
-    @NotNull(message = "username must not be null")
+    @NotNull(message = "{nuclearshop.validation.NotNull}")
     private String username;
 
     @NotNull(message = "password must not be null")

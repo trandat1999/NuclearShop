@@ -10,6 +10,7 @@ import com.tranhuudat.nuclearshop.type.TypeEmail;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 
 import javax.annotation.Resource;
@@ -100,7 +101,7 @@ public abstract class BaseService {
         NotificationEmail notificationEmail = NotificationEmail.builder()
                 .email(user.getEmail())
                 .type(TypeEmail.FORGOT)
-                .content(messageSource.getMessage(SystemMessage.CONTENT_MAIL_RESET_PASSWORD,new Object[]{password}, Locale.ROOT))
+                .content(messageSource.getMessage(SystemMessage.CONTENT_MAIL_RESET_PASSWORD,new Object[]{password}, LocaleContextHolder.getLocale()))
                 .subject(SystemMessage.SUBJECT_MAIL_RESET_PASSWORD)
                 .user(user)
                 .link(null)
@@ -110,6 +111,6 @@ public abstract class BaseService {
     }
 
     String getMessage(String message,Object... objects){
-        return messageSource.getMessage(message, objects, Locale.ROOT);
+        return messageSource.getMessage(message, objects, LocaleContextHolder.getLocale());
     }
 }

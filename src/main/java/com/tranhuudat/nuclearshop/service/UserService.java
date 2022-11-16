@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.jpa.TypedParameterValue;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,12 +48,12 @@ public class UserService extends BaseService {
             user = userRepository.findById(id).orElse(null);
             if (user == null) {
                 return getResponse404(messageSource.getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,
-                        new Object[]{SystemVariable.USER}, Locale.ROOT));
+                        new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
             }
         }
         if (CollectionUtils.isEmpty(userRequest.getRoles())) {
             return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_NOT_NULL_OR_EMPTY_LIST,
-                    new Object[]{SystemVariable.ROLES}, Locale.ROOT));
+                    new Object[]{SystemVariable.ROLES}, LocaleContextHolder.getLocale()));
         }
         Person person = Person.builder()
                 .idNumberIssueBy(userRequest.getPerson().getIdNumberIssueBy())
@@ -73,7 +74,7 @@ public class UserService extends BaseService {
                 roles.add(role);
             } catch (EntityNotFoundException e) {
                 return getResponse404(messageSource.getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,
-                        new Object[]{SystemVariable.ROLE}, Locale.ROOT));
+                        new Object[]{SystemVariable.ROLE}, LocaleContextHolder.getLocale()));
             }
         }
         user = User.builder()
@@ -97,10 +98,10 @@ public class UserService extends BaseService {
         if (id == null) {
             sendMailActive(user);
             return getResponse201(userResponse,
-                    messageSource.getMessage(SystemMessage.MESSAGE_CREATE_SUCCESS, new Object[]{SystemVariable.USER}, Locale.ROOT));
+                    messageSource.getMessage(SystemMessage.MESSAGE_CREATE_SUCCESS, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
         }
         return getResponse200(userResponse,
-                messageSource.getMessage(SystemMessage.MESSAGE_UPDATE_SUCCESS, new Object[]{SystemVariable.USER}, Locale.ROOT));
+                messageSource.getMessage(SystemMessage.MESSAGE_UPDATE_SUCCESS, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
 
     }
 
@@ -112,14 +113,14 @@ public class UserService extends BaseService {
         UserResponse userResponse = userRepository.getById(id);
         if (CommonUtils.isNull(userResponse)) {
             return getResponse404(messageSource.getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,
-                    new Object[]{SystemVariable.ROLE}, Locale.ROOT));
+                    new Object[]{SystemVariable.ROLE}, LocaleContextHolder.getLocale()));
         }
-        return getResponse200(userResponse, messageSource.getMessage(SystemMessage.MESSAGE_FOUND, new Object[]{SystemVariable.USER}, Locale.ROOT));
+        return getResponse200(userResponse, messageSource.getMessage(SystemMessage.MESSAGE_FOUND, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
     }
 
     public BaseResponse getAll() {
         List<UserResponse> userResponseList = userRepository.getAll();
-        return getResponse200(userResponseList, messageSource.getMessage(SystemMessage.MESSAGE_GET_ALL_SUCCESS, new Object[]{SystemVariable.USER}, Locale.ROOT));
+        return getResponse200(userResponseList, messageSource.getMessage(SystemMessage.MESSAGE_GET_ALL_SUCCESS, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
     }
 
     public BaseResponse getPage(SearchRequest searchRequest) {
@@ -134,7 +135,7 @@ public class UserService extends BaseService {
         TypedParameterValue keyWord = new TypedParameterValue(StandardBasicTypes.STRING, searchRequest.getKeyword());
         Pageable pageable = PageRequest.of(pageIndex - 1, pageSize);
         Page<UserResponse> userResponsePage = userRepository.getPage(keyWord, pageable);
-        return getResponse200(userResponsePage, messageSource.getMessage(SystemMessage.MESSAGE_GET_PAGE_SUCCESS, new Object[]{SystemVariable.USER}, Locale.ROOT));
+        return getResponse200(userResponsePage, messageSource.getMessage(SystemMessage.MESSAGE_GET_PAGE_SUCCESS, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
     }
 
     public BaseResponse getCurrentUser() {
@@ -142,8 +143,8 @@ public class UserService extends BaseService {
         if (user != null) {
             TypedParameterValue username = new TypedParameterValue(StandardBasicTypes.STRING, user.getUsername());
             CurrentUserResponse response = userRepository.getCurrentUser(username);
-            return getResponse200(response, messageSource.getMessage(SystemMessage.MESSAGE_FOUND, new Object[]{SystemVariable.USER}, Locale.ROOT));
+            return getResponse200(response, messageSource.getMessage(SystemMessage.MESSAGE_FOUND, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
         }
-        return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_NOT_LOGIN, null, Locale.ROOT));
+        return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_NOT_LOGIN, null, LocaleContextHolder.getLocale()));
     }
 }

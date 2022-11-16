@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.jpa.TypedParameterValue;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -133,10 +134,10 @@ public class AuthService extends BaseService {
             user =  userRepository.save(user);
             senMailResetPassword(newPassword,user);
             return getResponse200(SystemMessage.MESSAGE_RESET_PASSWORD_SUCCESS_INFO,
-                    messageSource.getMessage(SystemMessage.MESSAGE_RESET_PASSWORD_SUCCESS,null,Locale.ROOT));
+                    messageSource.getMessage(SystemMessage.MESSAGE_RESET_PASSWORD_SUCCESS,null, LocaleContextHolder.getLocale()));
         }
         return getResponse404(messageSource.getMessage(SystemMessage.MESSAGE_USERNAME_EMAIL_NOT_MATCH,
-                new Object[]{request.getUsername(),request.getEmail()} , Locale.ROOT));
+                new Object[]{request.getUsername(),request.getEmail()} , LocaleContextHolder.getLocale()));
     }
 
     public boolean checkExistEmail(String email){
