@@ -5,12 +5,20 @@ import com.tranhuudat.nuclearshop.entity.User;
 import com.tranhuudat.nuclearshop.entity.VerificationToken;
 import com.tranhuudat.nuclearshop.repository.NotificationEmailRepository;
 import com.tranhuudat.nuclearshop.repository.VerificationTokenRepository;
+import com.tranhuudat.nuclearshop.request.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.type.TypeEmail;
+import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
+import org.hibernate.jpa.TypedParameterValue;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
 
 import javax.annotation.Resource;
@@ -19,6 +27,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 public abstract class BaseService {
+
+    protected ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
 
     @Resource
     private MessageSource messageSource;
@@ -110,7 +120,20 @@ public abstract class BaseService {
         mailService.sendMailResetPassword(notificationEmail);
     }
 
-    String getMessage(String message,Object... objects){
+    protected String getMessage(String message, Object... objects){
         return messageSource.getMessage(message, objects, LocaleContextHolder.getLocale());
+    }
+
+    protected Pageable getPageable(Object object){
+        SearchRequest searchRequest = (SearchRequest) object;
+        int pageIndex = 1;
+        int pageSize = 10;
+        if (CommonUtils.isNotNull(searchRequest.getPageIndex()) && searchRequest.getPageIndex() > 0) {
+            pageIndex = searchRequest.getPageIndex();
+        }
+        if (CommonUtils.isNotNull(searchRequest.getPageSize()) && searchRequest.getPageSize() > 0) {
+            pageSize = searchRequest.getPageSize();
+        }
+        return PageRequest.of(pageIndex - 1, pageSize);
     }
 }

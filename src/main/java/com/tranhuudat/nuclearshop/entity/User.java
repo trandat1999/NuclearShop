@@ -3,6 +3,7 @@ package com.tranhuudat.nuclearshop.entity;
 import com.tranhuudat.nuclearshop.util.anotation.UniqueEmail;
 import com.tranhuudat.nuclearshop.util.anotation.UniqueUsername;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "username", length = 100, nullable = false, unique = true)

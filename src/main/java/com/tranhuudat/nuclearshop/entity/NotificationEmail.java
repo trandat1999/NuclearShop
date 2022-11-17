@@ -2,12 +2,13 @@ package com.tranhuudat.nuclearshop.entity;
 
 import com.tranhuudat.nuclearshop.type.TypeEmail;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_mail_notification")
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @AllArgsConstructor

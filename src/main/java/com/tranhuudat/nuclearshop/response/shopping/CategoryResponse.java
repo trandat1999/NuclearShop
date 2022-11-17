@@ -7,5 +7,5 @@ public interface CategoryResponse {
     String getCode();
     Long getId();
     String getDescription();
-    Set<CategoryResponse> getChildren();
+    Long getParentId();
 }

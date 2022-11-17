@@ -8,4 +8,9 @@ public class SystemVariable {
     public static final String FILE = "File";
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
+
+    public static final String CODE = "code";
+
+    public static final String CATEGORY_PARENT = "parent category";
+    public static final String CATEGORY = "Category";
 }

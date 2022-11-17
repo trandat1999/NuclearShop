@@ -15,8 +15,11 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     @Query("SELECT count(id) FROM Category WHERE code = :code AND (:id IS NULL OR id <> :id)")
     long checkCode(TypedParameterValue code, TypedParameterValue id);
 
-    @Query("SELECT name,code,description,children FROM Category WHERE 1=1 " +
+    @Query(value = "SELECT name as name,code as code,description as description,id as id, parentId as parentId FROM Category WHERE 1=1 " +
             " AND (:code IS NULL OR code LIKE CONCAT('%',:code,'%')) " +
-            " AND (:name IS NULL OR name LIKE CONCAT('%',:name,'%')) ")
+            " AND (:name IS NULL OR name LIKE CONCAT('%',:name,'%')) ",
+            countQuery = "SELECT count(id) FROM Category WHERE 1=1 " +
+                    " AND (:code IS NULL OR code LIKE CONCAT('%',:code,'%')) " +
+                    " AND (:name IS NULL OR name LIKE CONCAT('%',:name,'%')) ")
     Page<CategoryResponse> findPage(TypedParameterValue code, TypedParameterValue name,Pageable pageable);
 }

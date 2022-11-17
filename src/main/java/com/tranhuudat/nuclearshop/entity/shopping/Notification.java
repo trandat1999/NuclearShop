@@ -2,6 +2,7 @@ package com.tranhuudat.nuclearshop.entity.shopping;
 
 import com.tranhuudat.nuclearshop.entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Table(name = "tbl_notifications")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Notification extends BaseEntity {

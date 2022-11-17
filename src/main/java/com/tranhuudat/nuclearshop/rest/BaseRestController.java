@@ -77,7 +77,7 @@ public abstract class BaseRestController {
         return verificationToken;
     }
 
-    String getMessage(String message,Object... objects){
+    protected String getMessage(String message,Object... objects){
         return messageSource.getMessage(message, objects, LocaleContextHolder.getLocale());
     }
 }

@@ -2,6 +2,7 @@ package com.tranhuudat.nuclearshop.entity.shopping;
 
 import com.tranhuudat.nuclearshop.entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
 @Table(name = "tbl_publisher")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Publisher extends BaseEntity {

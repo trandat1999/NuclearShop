@@ -24,6 +24,8 @@ public class SystemMessage {
 
     public static final String MESSAGE_ERROR_EXISTS = "nuclear.shop.message.ErrorExist";
 
+    public static final String MESSAGE_DELETE_SUCCESS = "nuclear.shop.message.DeleteSuccess";
+
     //message app
     public static final String CONTENT_MAIL_REGISTER = "Thanks for registering your account. Link activity will be expired after 5 minutes";
     public static final String SUBJECT_MAIL_REGISTER = "Verify your email address";

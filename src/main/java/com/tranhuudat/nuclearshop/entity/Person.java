@@ -2,6 +2,7 @@ package com.tranhuudat.nuclearshop.entity;
 
 import com.tranhuudat.nuclearshop.type.Gender;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
 @Getter
 @Entity
 @Table(name = "tbl_person")
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Person extends BaseEntity {

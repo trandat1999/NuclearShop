@@ -2,6 +2,7 @@ package com.tranhuudat.nuclearshop.entity.shopping;
 
 import com.tranhuudat.nuclearshop.entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "tbl_file_product")
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileProduct extends BaseEntity {

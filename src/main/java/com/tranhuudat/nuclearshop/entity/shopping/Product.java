@@ -3,6 +3,7 @@ package com.tranhuudat.nuclearshop.entity.shopping;
 import com.tranhuudat.nuclearshop.entity.BaseEntity;
 import com.tranhuudat.nuclearshop.entity.File;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product extends BaseEntity {
