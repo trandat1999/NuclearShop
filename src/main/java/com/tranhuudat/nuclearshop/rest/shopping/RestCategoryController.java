@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @PreAuthorize("hasAnyAuthority(T(com.tranhuudat.nuclearshop.util.ConstUtil).ADMIN_ROLE)")
 @RequestMapping("/api/v1/categories")
-public class CategoryRestController {
+public class RestCategoryController {
     private CategoryService categoryService;
 
     @PostMapping
