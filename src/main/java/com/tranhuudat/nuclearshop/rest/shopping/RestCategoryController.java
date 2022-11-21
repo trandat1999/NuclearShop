@@ -24,7 +24,7 @@ public class RestCategoryController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<BaseResponse> search( CategorySearchRequest request){
+    public ResponseEntity<BaseResponse> search(@RequestBody CategorySearchRequest request){
         return ResponseEntity.ok(categoryService.getPage(request));
     }
 

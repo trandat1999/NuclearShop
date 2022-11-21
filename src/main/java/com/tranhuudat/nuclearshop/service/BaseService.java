@@ -126,14 +126,14 @@ public abstract class BaseService {
 
     protected Pageable getPageable(Object object){
         SearchRequest searchRequest = (SearchRequest) object;
-        int pageIndex = 1;
+        int pageIndex = 0;
         int pageSize = 10;
-        if (CommonUtils.isNotNull(searchRequest.getPageIndex()) && searchRequest.getPageIndex() > 0) {
+        if (CommonUtils.isNotNull(searchRequest.getPageIndex()) && searchRequest.getPageIndex() >= 0) {
             pageIndex = searchRequest.getPageIndex();
         }
         if (CommonUtils.isNotNull(searchRequest.getPageSize()) && searchRequest.getPageSize() > 0) {
             pageSize = searchRequest.getPageSize();
         }
-        return PageRequest.of(pageIndex - 1, pageSize);
+        return PageRequest.of(pageIndex, pageSize);
     }
 }

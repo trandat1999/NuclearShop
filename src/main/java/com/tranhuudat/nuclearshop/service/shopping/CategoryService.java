@@ -61,9 +61,8 @@ public class CategoryService extends BaseService {
     }
 
     public BaseResponse getPage(CategorySearchRequest request){
-        TypedParameterValue code = new TypedParameterValue(StringType.INSTANCE,request.getCode());
-        TypedParameterValue name = new TypedParameterValue(StringType.INSTANCE,request.getName());
-        return getResponse200(categoryRepository.findPage(code,name,getPageable(request)),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
+        TypedParameterValue keyword = new TypedParameterValue(StringType.INSTANCE,request.getKeyword());
+        return getResponse200(categoryRepository.findPage(keyword,getPageable(request)),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
 
     public BaseResponse delete(long id){
