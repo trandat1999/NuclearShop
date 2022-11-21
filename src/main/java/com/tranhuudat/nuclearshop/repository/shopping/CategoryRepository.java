@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long> {
 
@@ -22,4 +24,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
                     " AND (:code IS NULL OR code LIKE CONCAT('%',:code,'%')) " +
                     " AND (:name IS NULL OR name LIKE CONCAT('%',:name,'%')) ")
     Page<CategoryResponse> findPage(TypedParameterValue code, TypedParameterValue name,Pageable pageable);
+
+    @Query(value = "SELECT name as name, id as id FROM Category  where parentId is null")
+    List<CategoryResponse> findAllParent();
 }

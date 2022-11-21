@@ -38,4 +38,9 @@ public class RestCategoryController {
         return ResponseEntity.ok(categoryService.get(id));
     }
 
+    @GetMapping ("/parent")
+    public ResponseEntity<BaseResponse> getParent(){
+        return ResponseEntity.ok(categoryService.getAllParent());
+    }
+
 }

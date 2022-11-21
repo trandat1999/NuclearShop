@@ -18,6 +18,7 @@ import org.hibernate.type.StringType;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -81,5 +82,10 @@ public class CategoryService extends BaseService {
                     getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.CATEGORY));
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.CATEGORY));
+    }
+
+    public BaseResponse getAllParent(){
+        return getResponse200(categoryRepository.findAllParent(),
+                getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.CATEGORY));
     }
 }
