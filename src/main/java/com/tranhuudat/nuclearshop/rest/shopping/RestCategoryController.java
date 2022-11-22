@@ -20,7 +20,7 @@ public class RestCategoryController {
 
     @PostMapping
     public ResponseEntity<BaseResponse> save(@Valid @RequestBody CategoryRequest request){
-        return ResponseEntity.ok(categoryService.saveOrUpdate(request,null));
+        return ResponseEntity.ok(categoryService.saveOrUpdate(request));
     }
 
     @PostMapping("/search")

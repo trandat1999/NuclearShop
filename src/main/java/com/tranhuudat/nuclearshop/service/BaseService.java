@@ -65,9 +65,18 @@ public abstract class BaseService {
                 .build();
     }
 
-    protected BaseResponse getResponse400(String message, Object... args) {
+    protected BaseResponse getResponse400(String message, Object object) {
         return BaseResponse.builder()
-                .body(args)
+                .body(object)
+                .code(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.name())
+                .message(message)
+                .build();
+    }
+
+    protected BaseResponse getResponse400(String message) {
+        return BaseResponse.builder()
+                .body(null)
                 .code(HttpStatus.BAD_REQUEST.value())
                 .status(HttpStatus.BAD_REQUEST.name())
                 .message(message)

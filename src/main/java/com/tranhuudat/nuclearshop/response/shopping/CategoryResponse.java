@@ -8,4 +8,5 @@ public interface CategoryResponse {
     Long getId();
     String getDescription();
     Long getParentId();
+    String getParentName();
 }

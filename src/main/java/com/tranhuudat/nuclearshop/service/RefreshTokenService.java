@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class RefreshTokenService {
+public class RefreshTokenService extends BaseService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     public RefreshToken generateRefreshToken(String username) {
@@ -29,9 +29,9 @@ public class RefreshTokenService {
 
     void validateRefreshToken(RefreshTokenRequest refreshTokenRequest) {
         RefreshToken refreshToken = refreshTokenRepository.findByTokenAndUsername(refreshTokenRequest.getRefreshToken(), refreshTokenRequest.getUsername())
-                .orElseThrow(() -> new NuclearShopException(SystemMessage.MESSAGE_INVALID_REFRESH_TOKEN));
+                .orElseThrow(() -> new NuclearShopException(getMessage(SystemMessage.MESSAGE_INVALID_REFRESH_TOKEN_PROPERTIES)));
         if (refreshToken.getExpiredDate().isBefore(LocalDateTime.now())) {
-            throw new NuclearShopException(SystemMessage.MESSAGE_REFRESH_TOKEN_EXPIRED);
+            throw new NuclearShopException(getMessage(SystemMessage.MESSAGE_REFRESH_TOKEN_EXPIRED_PROPERTIES));
         }
         refreshToken.setExpiredDate(LocalDateTime.now().plusSeconds(ConstUtil.TIMEOUT_REFRESH_TOKEN));
         refreshTokenRepository.save(refreshToken);

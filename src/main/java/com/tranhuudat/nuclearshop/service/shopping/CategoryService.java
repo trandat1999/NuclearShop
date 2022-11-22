@@ -27,17 +27,17 @@ import java.util.Optional;
 public class CategoryService extends BaseService {
     private CategoryRepository categoryRepository;
 
-    public BaseResponse saveOrUpdate(CategoryRequest categoryRequest, Long id){
+    public BaseResponse saveOrUpdate(CategoryRequest categoryRequest){
         TypedParameterValue code = new TypedParameterValue(StringType.INSTANCE,categoryRequest.getCode());
-        TypedParameterValue idCategory = new TypedParameterValue(LongType.INSTANCE,id);
+        TypedParameterValue idCategory = new TypedParameterValue(LongType.INSTANCE,categoryRequest.getId());
         long countByCodeExists = categoryRepository.checkCode(code,idCategory);
         if(countByCodeExists>0){
             Map<String, String> errors = new HashMap<>();
             errors.put(SystemVariable.CODE, getMessage(SystemMessage.MESSAGE_ERROR_EXISTS,categoryRequest.getCode()));
             return getResponse400(SystemMessage.MESSAGE_BAD_REQUEST,errors);
         }
-        if(CommonUtils.isNotNull(id)){
-            Optional<Category> optionalCategory = categoryRepository.findById(id);
+        if(CommonUtils.isNotNull(categoryRequest.getId())){
+            Optional<Category> optionalCategory = categoryRepository.findById(categoryRequest.getId());
             if(optionalCategory.isEmpty()){
                 return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE, SystemVariable.CATEGORY));
             }
@@ -53,7 +53,7 @@ public class CategoryService extends BaseService {
                 .name(categoryRequest.getName())
                 .description(categoryRequest.getDescription())
                 .parentId(categoryRequest.getParentId())
-                .id(id)
+                .id(categoryRequest.getId())
                 .build();
         entity = categoryRepository.save(entity);
         CategoryResponse categoryResponse = projectionFactory.createProjection(CategoryResponse.class, entity);
