@@ -7,6 +7,7 @@ import com.tranhuudat.nuclearshop.request.shopping.CategoryRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.response.FileResponse;
 import com.tranhuudat.nuclearshop.response.shopping.CategoryResponse;
+import com.tranhuudat.nuclearshop.response.shopping.CategoryViewResponse;
 import com.tranhuudat.nuclearshop.service.BaseService;
 import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
@@ -56,7 +57,7 @@ public class CategoryService extends BaseService {
                 .id(categoryRequest.getId())
                 .build();
         entity = categoryRepository.save(entity);
-        CategoryResponse categoryResponse = projectionFactory.createProjection(CategoryResponse.class, entity);
+        CategoryViewResponse categoryResponse = projectionFactory.createProjection(CategoryViewResponse.class, entity);
         return getResponse200(categoryResponse,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
 
@@ -77,7 +78,7 @@ public class CategoryService extends BaseService {
     public BaseResponse get(long id){
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         if(optionalCategory.isPresent()){
-            return getResponse200(projectionFactory.createProjection(CategoryResponse.class,optionalCategory.get()),
+            return getResponse200(projectionFactory.createProjection(CategoryViewResponse.class,optionalCategory.get()),
                     getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.CATEGORY));
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.CATEGORY));
