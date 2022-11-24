@@ -1,5 +1,7 @@
 package com.tranhuudat.nuclearshop.response;
 
+import com.tranhuudat.nuclearshop.entity.File;
+
 import java.util.Set;
 
 public interface CurrentUserResponse {
@@ -19,10 +21,6 @@ public interface CurrentUserResponse {
 
         String getFirstName();
 
-        File getFilePhoto();
-    }
-
-    interface File{
-        String getPath();
+        File getPhotoFile();
     }
 }
