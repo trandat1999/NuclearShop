@@ -18,5 +18,11 @@ public interface CurrentUserResponse {
         String getLastName();
 
         String getFirstName();
+
+        File getFilePhoto();
+    }
+
+    interface File{
+        String getPath();
     }
 }

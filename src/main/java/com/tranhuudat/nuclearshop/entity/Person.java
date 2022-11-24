@@ -47,4 +47,8 @@ public class Person extends BaseEntity {
     @Column(name = "email")
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "photo")
+    private File photoFile;
+
 }
