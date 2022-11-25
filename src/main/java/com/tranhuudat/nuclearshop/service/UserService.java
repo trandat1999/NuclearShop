@@ -3,13 +3,16 @@ package com.tranhuudat.nuclearshop.service;
 import com.tranhuudat.nuclearshop.entity.Person;
 import com.tranhuudat.nuclearshop.entity.Role;
 import com.tranhuudat.nuclearshop.entity.User;
+import com.tranhuudat.nuclearshop.repository.FileRepository;
 import com.tranhuudat.nuclearshop.repository.RoleRepository;
 import com.tranhuudat.nuclearshop.repository.UserRepository;
+import com.tranhuudat.nuclearshop.request.PersonRequest;
 import com.tranhuudat.nuclearshop.request.RoleRequest;
 import com.tranhuudat.nuclearshop.request.UserRequest;
 import com.tranhuudat.nuclearshop.request.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.response.CurrentUserResponse;
+import com.tranhuudat.nuclearshop.response.PersonResponse;
 import com.tranhuudat.nuclearshop.response.UserResponse;
 import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.SecurityUtils;
@@ -41,6 +44,7 @@ public class UserService extends BaseService {
     private MessageSource messageSource;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private FileRepository fileRepository;
 
     public BaseResponse update(UserRequest userRequest, Long id) {
         User user = null;
@@ -146,5 +150,51 @@ public class UserService extends BaseService {
             return getResponse200(response, messageSource.getMessage(SystemMessage.MESSAGE_FOUND, new Object[]{SystemVariable.USER}, LocaleContextHolder.getLocale()));
         }
         return getResponse400(messageSource.getMessage(SystemMessage.MESSAGE_NOT_LOGIN, null, LocaleContextHolder.getLocale()));
+    }
+
+    public BaseResponse updateProfile(PersonRequest personRequest) {
+        org.springframework.security.core.userdetails.User current = (org.springframework.security.core.userdetails.User) SecurityUtils.getPrincipal();
+        if(current != null){
+            User entity = userRepository.findByUsername(current.getUsername()).orElse(null);
+            if(entity == null){
+                return getResponse400(getMessage(SystemMessage.MESSAGE_BAD_REQUEST));
+            }
+            Person entityPerson = entity.getPerson();
+            if(entityPerson == null){
+                entityPerson = new Person();
+            }
+            entityPerson.setBirthDate(personRequest.getBirthDate());
+            entityPerson.setEmail(personRequest.getEmail());
+            entityPerson.setFirstName(personRequest.getFirstName());
+            entityPerson.setLastName(personRequest.getLastName());
+            entityPerson.setPhoneNumber(personRequest.getPhoneNumber());
+            entityPerson.setGender(personRequest.getGender());
+            entityPerson.setIdNumber(personRequest.getIdNumber());
+            entityPerson.setIdNumberIssueBy(personRequest.getIdNumberIssueBy());
+            entityPerson.setIdNumberIssueDate(personRequest.getIdNumberIssueDate());
+            if(CommonUtils.isNotNull(personRequest.getPhotoFile()) && CommonUtils.isNotNull(personRequest.getPhotoFile().getId())){
+                entityPerson.setPhotoFile(fileRepository.findById(personRequest.getPhotoFile().getId()).orElse(null));
+            }else{
+                entityPerson.setPhotoFile(null);
+            }
+            entity.setPerson(entityPerson);
+            entity = userRepository.save(entity);
+            return getResponse200(projectionFactory.createProjection(PersonResponse.class,entity.getPerson()),
+                    getMessage(SystemMessage.MESSAGE_UPDATE_SUCCESS));
+        }
+        return getResponse400(getMessage(SystemMessage.MESSAGE_BAD_REQUEST));
+    }
+
+    public BaseResponse getProfile() {
+        org.springframework.security.core.userdetails.User current = (org.springframework.security.core.userdetails.User) SecurityUtils.getPrincipal();
+        if(current != null){
+            User entity = userRepository.findByUsername(current.getUsername()).orElse(null);
+            if(entity == null){
+                return getResponse400(getMessage(SystemMessage.MESSAGE_BAD_REQUEST));
+            }
+            return getResponse200(projectionFactory.createProjection(PersonResponse.class,entity.getPerson()),
+                    getMessage(SystemMessage.MESSAGE_UPDATE_SUCCESS));
+        }
+        return getResponse400(getMessage(SystemMessage.MESSAGE_BAD_REQUEST));
     }
 }

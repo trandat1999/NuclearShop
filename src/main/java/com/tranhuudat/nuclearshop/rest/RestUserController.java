@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.rest;
 
+import com.tranhuudat.nuclearshop.request.PersonRequest;
 import com.tranhuudat.nuclearshop.request.UserRequest;
 import com.tranhuudat.nuclearshop.request.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
@@ -55,9 +56,23 @@ public class RestUserController {
         return ResponseEntity.ok(userService.getPage(searchRequest));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/current")
     public ResponseEntity<BaseResponse> getCurrentUser() {
         return ResponseEntity.ok(userService.getCurrentUser());
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/update-profile")
+    public ResponseEntity<BaseResponse> updateProfile(@RequestBody @Valid PersonRequest personRequest){
+        return ResponseEntity.ok(userService.updateProfile(personRequest));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/get-profile")
+    public ResponseEntity<BaseResponse> getProfile(){
+        return ResponseEntity.ok(userService.getProfile());
+    }
+
 
 }

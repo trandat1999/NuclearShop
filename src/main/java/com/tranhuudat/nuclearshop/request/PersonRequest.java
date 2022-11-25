@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.request;
 
+import com.tranhuudat.nuclearshop.entity.File;
 import com.tranhuudat.nuclearshop.type.Gender;
 import com.tranhuudat.nuclearshop.util.anotation.BirthDate;
 import com.tranhuudat.nuclearshop.util.anotation.PhoneNumber;
@@ -34,4 +35,8 @@ public class PersonRequest {
     private String idNumberIssueBy;
 
     private Date idNumberIssueDate;
+
+    private File photoFile;
+
+    private String email;
 }
