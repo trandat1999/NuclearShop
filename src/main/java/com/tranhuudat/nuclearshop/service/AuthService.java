@@ -125,9 +125,7 @@ public class AuthService extends BaseService {
     }
 
     public BaseResponse resetPassword(ResetPasswordRequest request) {
-        TypedParameterValue username = new TypedParameterValue(StandardBasicTypes.STRING, request.getUsername());
-        TypedParameterValue email = new TypedParameterValue(StandardBasicTypes.STRING, request.getEmail());
-        User user = userRepository.findByUsernameAndEmail(username, email).orElse(null);
+        User user = userRepository.findByUsernameAndEmail(request.getUsername(), request.getEmail()).orElse(null);
         if(user!=null){
             String newPassword = CommonUtils.generatePassword();
             user.setPassword(passwordEncoder.encode(newPassword));

@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        if(value == null){
+            return true;
+        }
         if (StringUtils.hasText(value)) {
             return Pattern.compile(ConstUtil.REGEX_PHONE_NUMBER).matcher(value).matches();
         }

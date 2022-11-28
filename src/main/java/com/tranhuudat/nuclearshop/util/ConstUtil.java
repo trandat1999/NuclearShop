@@ -1,5 +1,7 @@
 package com.tranhuudat.nuclearshop.util;
 
+import java.io.IOException;
+
 public class ConstUtil {
     //system_role
     public static final String ADMIN_ROLE = "ADMIN";
@@ -45,4 +47,6 @@ public class ConstUtil {
     public static final String MINE_TYPE_DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
     public static final String MINE_TYPE_XLS = "application/vnd.ms-excel";
     public static final String MINE_TYPE_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+    public static final Integer MIN_LENGTH_PASSWORD_REQUIRED = 6;
 }
