@@ -13,6 +13,6 @@ public class BirthDateValidator implements ConstraintValidator<BirthDate, Date> 
         if (!ObjectUtils.isEmpty(value)) {
             return value.before(new Date());
         }
-        return false;
+        return true;
     }
 }
