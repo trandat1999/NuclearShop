@@ -42,6 +42,13 @@ public class RestUserController {
         return ResponseEntity.ok(userService.get(id));
     }
 
+//    @PreAuthorize("hasAnyAuthority(T(com.tranhuudat.nuclearshop.util.ConstUtil).ADMIN_ROLE)")
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<BaseResponse> delete(@PathVariable("id") long id) {
+//        log.info("API delete user by id : {}", id);
+//        return ResponseEntity.ok(userService.delete(id));
+//    }
+
     @PreAuthorize("hasAnyAuthority(T(com.tranhuudat.nuclearshop.util.ConstUtil).ADMIN_ROLE)")
     @GetMapping()
     public ResponseEntity<BaseResponse> getAll() {

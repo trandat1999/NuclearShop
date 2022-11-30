@@ -64,6 +64,8 @@ public class UserService extends BaseService {
             if (user == null) {
                 return getResponse404(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.USER));
             }
+        }else{
+            user = new User();
         }
         if (CollectionUtils.isEmpty(userRequest.getRoles())) {
             return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_NULL_OR_EMPTY_LIST,SystemVariable.ROLES));
@@ -90,24 +92,20 @@ public class UserService extends BaseService {
                         new Object[]{SystemVariable.ROLE}, LocaleContextHolder.getLocale()));
             }
         }
-        user = User.builder()
-                .roles(roles)
-                .username(userRequest.getUsername())
-                .enabled(userRequest.getEnabled())
-                .person(person)
-                .email(userRequest.getEmail())
-                .accountNonExpired(true)
-                .credentialsNonExpired(true)
-                .accountNonLocked(true)
-                .id(id)
-                .build();
+        user.setPerson(person);
+        user.setRoles(roles);
+        if(id == null){
+            user.setUsername(user.getUsername());
+            user.setEnabled(false);
+        }else {
+            user.setEnabled(userRequest.getEnabled());
+        }
+        user.setEmail(userRequest.getEmail());
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
         if (!StringUtils.isEmpty(userRequest.getPassword())) {
             user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        }
-        if (id == null) {
-            user.setEnabled(false);
-        } else {
-            user.setEnabled(userRequest.getEnabled());
         }
         user = userRepository.save(user);
         UserResponse userResponse = userRepository.getById(user.getId());
@@ -197,4 +195,5 @@ public class UserService extends BaseService {
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_BAD_REQUEST));
     }
+
 }
