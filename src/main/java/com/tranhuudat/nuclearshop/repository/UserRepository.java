@@ -24,9 +24,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<UserResponse> getAll();
 
     @Query(value = "select u as user from User u " +
-            " where ( :keyword is null or u.username like concat('%',:keyword,'%') or u.person.lastName like concat('%',:keyword,'%') )",
+            " where ( :keyword is null or u.username like concat('%',:keyword,'%') or u.person.lastName like concat('%',:keyword,'%') " +
+            " or u.person.firstName like concat('%',:keyword,'%') or u.email like concat('%',:keyword,'%') or u.person.email like concat('%',:keyword,'%') )",
             countQuery = "select count(u)  from User u " +
-                    "where ( :keyword is null or u.username like concat('%',:keyword,'%') or u.person.lastName like concat('%',:keyword,'%'))")
+                    "where ( :keyword is null or u.username like concat('%',:keyword,'%') or u.person.lastName like concat('%',:keyword,'%')) " +
+                    " or u.person.firstName like concat('%',:keyword,'%') or u.email like concat('%',:keyword,'%') or u.person.email like concat('%',:keyword,'%')")
     Page<UserResponse> getPage(TypedParameterValue keyword, Pageable pageable);
 
     @Query("select u  as user from User u where u.username = :username")
