@@ -19,14 +19,7 @@ public class RestNotificationController extends BaseRestController{
     @GetMapping("/notify")
     public String getNotification() {
         // Push notifications to front-end
-        template.convertAndSend("/topic/notification", Math.random());
-        return "Notifications successfully sent to Angular !";
-    }
-
-    @MessageMapping("/topic/notification")
-    public String getTopNotification(@Payload String message, Principal principal) {
-        System.out.println(principal.getName());
-        template.convertAndSend("/topic/notification", Math.random());
+        template.convertAndSendToUser("admin1","/topic/notification", Math.random());
         return "Notifications successfully sent to Angular !";
     }
 }
