@@ -28,4 +28,10 @@ public class MailContentService {
         context.setVariable("host", ConstUtil.HOST_URL);
         return templateEngine.process("mail/resetPassword", context);
     }
+
+    public String buildContentNotification(String content) {
+        Context context = new Context();
+        context.setVariable("content", content);
+        return templateEngine.process("mail/notification", context);
+    }
 }

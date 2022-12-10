@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_notification")
@@ -19,6 +20,12 @@ public class Notification extends BaseEntity{
 
     @Column(name = "content")
     private String content;
+
+    @Column(name = "topic")
+    private String topic;
+
+    @Column(name = "date_notification")
+    private Date dateNotification;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.service;
 
+import com.tranhuudat.nuclearshop.entity.Notification;
 import com.tranhuudat.nuclearshop.entity.NotificationEmail;
 import com.tranhuudat.nuclearshop.exception.NuclearShopException;
 import lombok.AllArgsConstructor;
@@ -58,6 +59,29 @@ public class MailService {
         } catch (MailException e) {
             log.error("Exception occurred when sending mail because of exception {}", e.getMessage());
             throw new NuclearShopException("Exception occurred when sending mail to " + notificationEmail.getEmail(), e);
+        }
+    }
+
+
+    @Async
+    public void sendMailNotification(Notification notification) {
+        MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
+            messageHelper.setFrom("nuclearshop123@gmail.com");
+            messageHelper.setTo("datnuclear1999x@gmail.com");
+            messageHelper.setSubject("notification.getSubject()");
+            messageHelper.setText(mailContentService.buildContentNotification(notification.getContent()), true);
+            ClassPathResource logo = new ClassPathResource("/static/logo/image-1.png");
+            ClassPathResource login = new ClassPathResource("/static/logo/image-2.png");
+            messageHelper.addInline("logo", logo);
+            messageHelper.addInline("image2", login);
+        };
+        try {
+            mailSender.send(mimeMessagePreparator);
+            log.info("Activation email sent!!");
+        } catch (MailException e) {
+            log.error("Exception occurred when sending mail because of exception {}", e.getMessage());
+            throw new NuclearShopException("Exception occurred when sending mail to ", e);
         }
     }
 }

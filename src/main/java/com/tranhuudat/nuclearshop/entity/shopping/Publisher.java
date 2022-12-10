@@ -27,6 +27,10 @@ public class Publisher extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @OneToMany
-    private Set<Category> categories = new HashSet<>();
+    @Column(name = "address")
+    private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "administrative_unit_id")
+    private AdministrativeUnit administrativeUnit;
 }

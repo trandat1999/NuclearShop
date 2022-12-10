@@ -22,7 +22,7 @@ public class UserNotification extends BaseEntity{
     @Column(name = "notification_id", nullable = false)
     private Long NotificationId;
 
-    @Column(name = "read")
+    @Column(name = "is_read")
     private boolean read;
 
     @Column(name = "read_at")
