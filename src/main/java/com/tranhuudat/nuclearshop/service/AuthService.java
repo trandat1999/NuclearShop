@@ -50,6 +50,7 @@ public class AuthService extends BaseService {
     private final RefreshTokenService refreshTokenService;
     private final RoleRepository roleRepository;
     private final MessageSource messageSource;
+    private final CaptchaService captchaService;
 
     public BaseResponse register(RegisterRequest registerRequest) {
         Map<String, String> errors = new HashMap<>();
@@ -101,6 +102,10 @@ public class AuthService extends BaseService {
     }
 
     public AuthResponse login(LoginRequest loginRequest) {
+        boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
+        if(!captchaVerified) {
+            return null;
+        }
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);

@@ -13,6 +13,9 @@ public class LoginRequest {
     @NotNull(message = "{nuclearshop.validation.NotNull}")
     private String username;
 
-    @NotNull(message = "{nuclearshop.validation.NotNull")
+    @NotNull(message = "{nuclearshop.validation.NotNull}")
     private String password;
+
+    @NotNull(message = "{nuclearshop.validation.NotNull}")
+    private String recaptchaResponse;
 }

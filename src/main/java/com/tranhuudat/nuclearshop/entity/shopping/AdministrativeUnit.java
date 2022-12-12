@@ -23,7 +23,7 @@ public class AdministrativeUnit extends BaseEntity{
     @Column(name = "english_name")
     private String englishName;
 
-    @Column(name = "code")
+    @Column(name = "code",unique = true)
     private String code;
 
     @Column(name = "level")

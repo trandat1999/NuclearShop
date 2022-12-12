@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.rest.shopping;
 
+import com.tranhuudat.nuclearshop.request.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.rest.BaseRestController;
 import com.tranhuudat.nuclearshop.service.shopping.AdministrativeUnitService;
@@ -7,10 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -26,5 +24,15 @@ public class RestAdministrativeUnitController extends BaseRestController {
     @PostMapping("/import-excel")
     public ResponseEntity<BaseResponse> importData(@RequestParam("file") MultipartFile multipartFile){
         return ResponseEntity.ok(administrativeUnitService.importData(multipartFile));
+    }
+
+    @PostMapping("/page")
+    public ResponseEntity<BaseResponse> getPageParent(@RequestBody SearchRequest request){
+        return ResponseEntity.ok(administrativeUnitService.getPageParent(request));
+    }
+
+    @GetMapping("/all-parent")
+    public ResponseEntity<BaseResponse> getAllParent(){
+        return ResponseEntity.ok(administrativeUnitService.getAllParent());
     }
 }
