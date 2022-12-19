@@ -96,6 +96,10 @@ public class AdministrativeUnitService extends BaseService {
         return getResponse200(administrativeUnitRepository.findAllParent(),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
 
+    public BaseResponse getAllByParent(long id){
+        return getResponse200(administrativeUnitRepository.findAllByParent(id),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
+    }
+
     public BaseResponse getPageParent(SearchRequest searchRequest){
         return getResponse200(administrativeUnitRepository.getPageParent(searchRequest.getKeyword(),getPageable(searchRequest))
                 ,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));

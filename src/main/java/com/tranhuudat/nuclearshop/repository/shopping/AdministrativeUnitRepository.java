@@ -17,6 +17,9 @@ public interface AdministrativeUnitRepository extends JpaRepository<Administrati
     @Query(value = "SELECT name as name, code as code, id as id FROM AdministrativeUnit WHERE parent is null")
     List<AdministrativeUnitResponse> findAllParent();
 
+    @Query(value = "SELECT name as name, code as code, id as id FROM AdministrativeUnit WHERE parent.id = :id")
+    List<AdministrativeUnitResponse> findAllByParent(long id);
+
     @Query(value = "SELECT name as name, code as code, id as id FROM AdministrativeUnit " +
             "WHERE parent is null " +
             "AND (:keyword is null OR name LIKE concat('%',:keyword,'%') OR code LIKE concat('%',:keyword,'%'))",

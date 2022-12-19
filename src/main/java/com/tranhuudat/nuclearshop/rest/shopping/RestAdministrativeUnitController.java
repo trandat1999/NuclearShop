@@ -35,4 +35,9 @@ public class RestAdministrativeUnitController extends BaseRestController {
     public ResponseEntity<BaseResponse> getAllParent(){
         return ResponseEntity.ok(administrativeUnitService.getAllParent());
     }
+
+    @GetMapping("/all-by-parent/{id}")
+    public ResponseEntity<BaseResponse> getAllByParent(@PathVariable("id") long id){
+        return ResponseEntity.ok(administrativeUnitService.getAllByParent(id));
+    }
 }
