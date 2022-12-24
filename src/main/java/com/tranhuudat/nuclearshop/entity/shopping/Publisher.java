@@ -16,7 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Publisher extends BaseEntity {
-
     @Column(name = "name")
     private String name;
 

@@ -56,6 +56,15 @@ public abstract class BaseService {
                 .build();
     }
 
+    protected BaseResponse getResponse204(Object object, String message) {
+        return BaseResponse.builder()
+                .body(object)
+                .code(HttpStatus.NO_CONTENT.value())
+                .status(HttpStatus.NO_CONTENT.name())
+                .message(message)
+                .build();
+    }
+
     protected BaseResponse getResponse201(Object object, String message) {
         return BaseResponse.builder()
                 .body(object)

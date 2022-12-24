@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class User extends BaseEntity implements UserDetails {
     @JoinTable(name = "tbl_user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roles = new HashSet();
+    private Set<Role> roles = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "person_id")
@@ -52,6 +53,9 @@ public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "enabled")
     private Boolean enabled;
+
+    @Column(name = "last_login")
+    private Date lastLogin;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

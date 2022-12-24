@@ -51,4 +51,7 @@ public class Person extends BaseEntity {
     @JoinColumn(name = "photo")
     private File photoFile;
 
+    @OneToOne(mappedBy = "person")
+    private User user;
+
 }

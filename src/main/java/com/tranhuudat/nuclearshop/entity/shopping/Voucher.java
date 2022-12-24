@@ -16,7 +16,6 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Voucher extends BaseEntity {
-
     @Column(name = "code")
     private String code;
 }

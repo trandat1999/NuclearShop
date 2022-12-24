@@ -17,4 +17,5 @@ public class SystemVariable {
     public static final String CATEGORY = "Category";
 
     public static final String ADMINISTRATIVE_UNIT = "AdministrativeUnit";
+    public static final String PRODUCT = "Product";
 }
