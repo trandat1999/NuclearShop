@@ -1,7 +1,7 @@
 package com.tranhuudat.nuclearshop.repository.shopping;
 
+import com.tranhuudat.nuclearshop.dto.shopping.CategoryDto;
 import com.tranhuudat.nuclearshop.entity.shopping.Category;
-import com.tranhuudat.nuclearshop.response.shopping.CategoryResponse;
 import org.hibernate.jpa.TypedParameterValue;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     @Query("SELECT count(id) FROM Category WHERE code = :code AND (:id IS NULL OR id <> :id)")
     long checkCode(TypedParameterValue code, TypedParameterValue id);
 
-    @Query(value = "SELECT c.name as name,c.code as code,c.description as description,c.id as id, c.parentId as parentId, p.name as parentName " +
+    @Query(value = "SELECT new com.tranhuudat.nuclearshop.dto.shopping.CategoryDto(c)" +
             " FROM Category c " +
             " left join Category p on p.id = c.parentId " +
             " WHERE 1=1 " +
@@ -28,8 +28,13 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
                     " AND (:keyword IS NULL OR c.code LIKE CONCAT('%',:keyword,'%') " +
                     " OR c.name LIKE CONCAT('%',:keyword,'%') " +
                     " OR p.name LIKE CONCAT('%',:keyword,'%'))")
-    Page<CategoryResponse> findPage(TypedParameterValue keyword,Pageable pageable);
+    Page<CategoryDto> findPage(TypedParameterValue keyword,Pageable pageable);
 
-    @Query(value = "SELECT name as name, id as id FROM Category  where parentId is null")
-    List<CategoryResponse> findAllParent();
+    @Query(value = "SELECT new com.tranhuudat.nuclearshop.dto.shopping.CategoryDto(entity)" +
+            " FROM Category entity where entity.parentId is null")
+    List<CategoryDto> findAllParent();
+
+    @Query(value = "SELECT new com.tranhuudat.nuclearshop.dto.shopping.CategoryDto(entity) " +
+            "FROM Category entity where entity.voided = false or entity.voided is null")
+    List<CategoryDto> findAllNotDelete();
 }

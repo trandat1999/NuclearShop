@@ -2,11 +2,9 @@ package com.tranhuudat.nuclearshop.service.shopping;
 
 import com.tranhuudat.nuclearshop.entity.shopping.Category;
 import com.tranhuudat.nuclearshop.repository.shopping.CategoryRepository;
-import com.tranhuudat.nuclearshop.request.search.CategorySearchRequest;
-import com.tranhuudat.nuclearshop.request.shopping.CategoryRequest;
+import com.tranhuudat.nuclearshop.dto.search.CategorySearchRequest;
+import com.tranhuudat.nuclearshop.dto.shopping.CategoryDto;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
-import com.tranhuudat.nuclearshop.response.FileResponse;
-import com.tranhuudat.nuclearshop.response.shopping.CategoryResponse;
 import com.tranhuudat.nuclearshop.response.shopping.CategoryViewResponse;
 import com.tranhuudat.nuclearshop.service.BaseService;
 import com.tranhuudat.nuclearshop.util.CommonUtils;
@@ -19,7 +17,6 @@ import org.hibernate.type.StringType;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,33 +25,33 @@ import java.util.Optional;
 public class CategoryService extends BaseService {
     private CategoryRepository categoryRepository;
 
-    public BaseResponse saveOrUpdate(CategoryRequest categoryRequest){
-        TypedParameterValue code = new TypedParameterValue(StringType.INSTANCE,categoryRequest.getCode());
-        TypedParameterValue idCategory = new TypedParameterValue(LongType.INSTANCE,categoryRequest.getId());
+    public BaseResponse saveOrUpdate(CategoryDto categoryDto){
+        TypedParameterValue code = new TypedParameterValue(StringType.INSTANCE, categoryDto.getCode());
+        TypedParameterValue idCategory = new TypedParameterValue(LongType.INSTANCE, categoryDto.getId());
         long countByCodeExists = categoryRepository.checkCode(code,idCategory);
         if(countByCodeExists>0){
             Map<String, String> errors = new HashMap<>();
-            errors.put(SystemVariable.CODE, getMessage(SystemMessage.MESSAGE_ERROR_EXISTS,categoryRequest.getCode()));
+            errors.put(SystemVariable.CODE, getMessage(SystemMessage.MESSAGE_ERROR_EXISTS, categoryDto.getCode()));
             return getResponse400(SystemMessage.MESSAGE_BAD_REQUEST,errors);
         }
-        if(CommonUtils.isNotNull(categoryRequest.getId())){
-            Optional<Category> optionalCategory = categoryRepository.findById(categoryRequest.getId());
+        if(CommonUtils.isNotNull(categoryDto.getId())){
+            Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getId());
             if(optionalCategory.isEmpty()){
                 return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE, SystemVariable.CATEGORY));
             }
         }
-        if(CommonUtils.isNotNull(categoryRequest.getParentId())){
-            Optional<Category> optionalCategory = categoryRepository.findById(categoryRequest.getParentId());
+        if(CommonUtils.isNotNull(categoryDto.getParentId())){
+            Optional<Category> optionalCategory = categoryRepository.findById(categoryDto.getParentId());
             if(optionalCategory.isEmpty()){
                 return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE, SystemVariable.CATEGORY_PARENT));
             }
         }
         Category entity = Category.builder()
-                .code(categoryRequest.getCode())
-                .name(categoryRequest.getName())
-                .description(categoryRequest.getDescription())
-                .parentId(categoryRequest.getParentId())
-                .id(categoryRequest.getId())
+                .code(categoryDto.getCode())
+                .name(categoryDto.getName())
+                .description(categoryDto.getDescription())
+                .parentId(categoryDto.getParentId())
+                .id(categoryDto.getId())
                 .build();
         entity = categoryRepository.save(entity);
         CategoryViewResponse categoryResponse = projectionFactory.createProjection(CategoryViewResponse.class, entity);
@@ -63,7 +60,8 @@ public class CategoryService extends BaseService {
 
     public BaseResponse getPage(CategorySearchRequest request){
         TypedParameterValue keyword = new TypedParameterValue(StringType.INSTANCE,request.getKeyword());
-        return getResponse200(categoryRepository.findPage(keyword,getPageable(request)),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
+        return getResponse200(categoryRepository.findPage(keyword,getPageable(request)),
+                getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
 
     public BaseResponse delete(long id){
@@ -86,6 +84,11 @@ public class CategoryService extends BaseService {
 
     public BaseResponse getAllParent(){
         return getResponse200(categoryRepository.findAllParent(),
+                getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.CATEGORY));
+    }
+
+    public BaseResponse getAll(){
+        return getResponse200(categoryRepository.findAllNotDelete(),
                 getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.CATEGORY));
     }
 }

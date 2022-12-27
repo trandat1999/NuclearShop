@@ -5,14 +5,12 @@ import com.tranhuudat.nuclearshop.entity.User;
 import com.tranhuudat.nuclearshop.entity.VerificationToken;
 import com.tranhuudat.nuclearshop.repository.NotificationEmailRepository;
 import com.tranhuudat.nuclearshop.repository.VerificationTokenRepository;
-import com.tranhuudat.nuclearshop.request.search.SearchRequest;
+import com.tranhuudat.nuclearshop.dto.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.type.TypeEmail;
 import com.tranhuudat.nuclearshop.util.CommonUtils;
 import com.tranhuudat.nuclearshop.util.ConstUtil;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
-import org.hibernate.jpa.TypedParameterValue;
-import org.hibernate.type.StandardBasicTypes;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +21,6 @@ import org.springframework.http.HttpStatus;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.UUID;
 
 public abstract class BaseService {

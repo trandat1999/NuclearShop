@@ -1,4 +1,4 @@
-package com.tranhuudat.nuclearshop.request.search;
+package com.tranhuudat.nuclearshop.dto.search;
 
 import lombok.Data;
 

@@ -1,15 +1,12 @@
 package com.tranhuudat.nuclearshop.util;
 
-import com.tranhuudat.nuclearshop.entity.shopping.AdministrativeUnit;
-import com.tranhuudat.nuclearshop.request.shopping.AdministrativeUnitRequest;
+import com.tranhuudat.nuclearshop.dto.shopping.AdministrativeUnitDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.format.CellFormatType;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +18,11 @@ import java.util.List;
 @Slf4j
 public class ImportExcelUtils {
 
-    public static List<AdministrativeUnitRequest> loadDataFromFile(MultipartFile multipart){
+    public static List<AdministrativeUnitDto> loadDataFromFile(MultipartFile multipart){
         if(CommonUtils.isNull(multipart) || !StringUtils.hasText(multipart.getOriginalFilename())){
             return null;
         }
-        HashMap<String,AdministrativeUnitRequest> hashAdministrativeUnitMap = new HashMap<>();
+        HashMap<String, AdministrativeUnitDto> hashAdministrativeUnitMap = new HashMap<>();
         Workbook workbook = null;
         try {
             if(multipart.getOriginalFilename().endsWith(".xls")){
@@ -64,20 +61,20 @@ public class ImportExcelUtils {
                 cell = row.getCell(4);
                 nameWard = cell.getStringCellValue();
                 if(!hashAdministrativeUnitMap.containsKey(codeProvince)){
-                    hashAdministrativeUnitMap.put(codeProvince,AdministrativeUnitRequest.builder()
+                    hashAdministrativeUnitMap.put(codeProvince, AdministrativeUnitDto.builder()
                                     .code(codeProvince)
                                     .name(nameProvince)
                             .build());
                 }
                 if(!hashAdministrativeUnitMap.containsKey(codeDistrict)){
-                    hashAdministrativeUnitMap.put(codeDistrict,AdministrativeUnitRequest.builder()
+                    hashAdministrativeUnitMap.put(codeDistrict, AdministrativeUnitDto.builder()
                             .code(codeDistrict)
                             .name(nameDistrict)
                             .parentCode(codeProvince)
                             .build());
                 }
                 if(!hashAdministrativeUnitMap.containsKey(codeWard)){
-                    hashAdministrativeUnitMap.put(codeWard,AdministrativeUnitRequest.builder()
+                    hashAdministrativeUnitMap.put(codeWard, AdministrativeUnitDto.builder()
                             .code(codeWard)
                             .name(nameWard)
                             .parentCode(codeDistrict)

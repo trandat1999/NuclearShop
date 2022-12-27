@@ -1,6 +1,6 @@
 package com.tranhuudat.nuclearshop.rest.shopping;
 
-import com.tranhuudat.nuclearshop.request.search.SearchRequest;
+import com.tranhuudat.nuclearshop.dto.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.rest.BaseRestController;
 import com.tranhuudat.nuclearshop.service.shopping.AdministrativeUnitService;

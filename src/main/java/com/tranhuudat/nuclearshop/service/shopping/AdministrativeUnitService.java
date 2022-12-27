@@ -3,8 +3,8 @@ package com.tranhuudat.nuclearshop.service.shopping;
 
 import com.tranhuudat.nuclearshop.entity.shopping.AdministrativeUnit;
 import com.tranhuudat.nuclearshop.repository.shopping.AdministrativeUnitRepository;
-import com.tranhuudat.nuclearshop.request.search.SearchRequest;
-import com.tranhuudat.nuclearshop.request.shopping.AdministrativeUnitRequest;
+import com.tranhuudat.nuclearshop.dto.search.SearchRequest;
+import com.tranhuudat.nuclearshop.dto.shopping.AdministrativeUnitDto;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.response.shopping.ImportExcelResponse;
 import com.tranhuudat.nuclearshop.service.BaseService;
@@ -26,7 +26,7 @@ public class AdministrativeUnitService extends BaseService {
     private AdministrativeUnitRepository administrativeUnitRepository;
 
     public BaseResponse importData(MultipartFile multipartFile){
-        List<AdministrativeUnitRequest> administrative = ImportExcelUtils.loadDataFromFile(multipartFile);
+        List<AdministrativeUnitDto> administrative = ImportExcelUtils.loadDataFromFile(multipartFile);
         if(ObjectUtils.isEmpty(administrative)){
             return getResponse400(SystemMessage.MESSAGE_BAD_REQUEST);
         }
@@ -34,12 +34,12 @@ public class AdministrativeUnitService extends BaseService {
     }
 
 
-    private ImportExcelResponse saveDataImport(List<AdministrativeUnitRequest> administrative){
+    private ImportExcelResponse saveDataImport(List<AdministrativeUnitDto> administrative){
         ImportExcelResponse rs = new ImportExcelResponse();
         rs.setTotalRecords(administrative.size());
-        List<AdministrativeUnitRequest> successfully = new ArrayList<>();
-        List<AdministrativeUnitRequest> failed = new ArrayList<>();
-        for(AdministrativeUnitRequest request : administrative){
+        List<AdministrativeUnitDto> successfully = new ArrayList<>();
+        List<AdministrativeUnitDto> failed = new ArrayList<>();
+        for(AdministrativeUnitDto request : administrative){
             try {
                 AdministrativeUnit entity = administrativeUnitRepository.findByCode(request.getCode());
                 if(entity != null){
@@ -69,7 +69,7 @@ public class AdministrativeUnitService extends BaseService {
         return rs;
     }
 
-    public BaseResponse saveOrUpdate(AdministrativeUnitRequest request,Long id){
+    public BaseResponse saveOrUpdate(AdministrativeUnitDto request, Long id){
         AdministrativeUnit entity = null;
         if(id !=null){
             entity = administrativeUnitRepository.findById(id).orElse(null);

@@ -9,7 +9,7 @@ import com.tranhuudat.nuclearshop.repository.UserRepository;
 import com.tranhuudat.nuclearshop.request.PersonRequest;
 import com.tranhuudat.nuclearshop.request.RoleRequest;
 import com.tranhuudat.nuclearshop.request.UserRequest;
-import com.tranhuudat.nuclearshop.request.search.SearchRequest;
+import com.tranhuudat.nuclearshop.dto.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.response.CurrentUserResponse;
 import com.tranhuudat.nuclearshop.response.PersonResponse;

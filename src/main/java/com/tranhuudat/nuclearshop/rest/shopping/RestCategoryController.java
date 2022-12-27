@@ -1,7 +1,7 @@
 package com.tranhuudat.nuclearshop.rest.shopping;
 
-import com.tranhuudat.nuclearshop.request.search.CategorySearchRequest;
-import com.tranhuudat.nuclearshop.request.shopping.CategoryRequest;
+import com.tranhuudat.nuclearshop.dto.search.CategorySearchRequest;
+import com.tranhuudat.nuclearshop.dto.shopping.CategoryDto;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.service.shopping.CategoryService;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class RestCategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<BaseResponse> save(@Valid @RequestBody CategoryRequest request){
+    public ResponseEntity<BaseResponse> save(@Valid @RequestBody CategoryDto request){
         return ResponseEntity.ok(categoryService.saveOrUpdate(request));
     }
 
@@ -41,6 +41,11 @@ public class RestCategoryController {
     @GetMapping ("/parent")
     public ResponseEntity<BaseResponse> getParent(){
         return ResponseEntity.ok(categoryService.getAllParent());
+    }
+
+    @GetMapping
+    public ResponseEntity<BaseResponse> save(){
+        return ResponseEntity.ok(categoryService.getAll());
     }
 
 }

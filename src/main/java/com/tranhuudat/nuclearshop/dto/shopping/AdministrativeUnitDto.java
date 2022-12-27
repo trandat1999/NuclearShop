@@ -1,4 +1,4 @@
-package com.tranhuudat.nuclearshop.request.shopping;
+package com.tranhuudat.nuclearshop.dto.shopping;
 
 import lombok.*;
 
@@ -9,8 +9,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class AdministrativeUnitRequest {
-
+public class AdministrativeUnitDto {
     @NotNull(message = "{nuclearshop.validation.NotNull}")
     private String name;
 
@@ -29,6 +28,6 @@ public class AdministrativeUnitRequest {
 
     private String parentCode;
 
-    private AdministrativeUnitRequest parent;
-    private Set<AdministrativeUnitRequest> children;
+    private AdministrativeUnitDto parent;
+    private Set<AdministrativeUnitDto> children;
 }

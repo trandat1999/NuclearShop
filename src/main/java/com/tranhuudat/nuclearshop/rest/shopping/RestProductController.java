@@ -1,12 +1,11 @@
 package com.tranhuudat.nuclearshop.rest.shopping;
 
-import com.tranhuudat.nuclearshop.request.search.ProductSearch;
-import com.tranhuudat.nuclearshop.request.shopping.ProductRequest;
+import com.tranhuudat.nuclearshop.dto.search.ProductSearch;
+import com.tranhuudat.nuclearshop.dto.shopping.ProductDto;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.service.shopping.ProductService;
 import com.tranhuudat.nuclearshop.util.anotation.LogUsername;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class RestProductController {
     private final ProductService productService;
     @PostMapping
     @LogUsername(m = "Api save product")
-    public ResponseEntity<BaseResponse> save(@RequestBody @Valid ProductRequest request){
+    public ResponseEntity<BaseResponse> save(@RequestBody @Valid ProductDto request){
         return ResponseEntity.ok(productService.saveOrUpdate(request,null));
     }
     @GetMapping("/{id}")
@@ -34,7 +33,7 @@ public class RestProductController {
 
     @PutMapping("/{id}")
     @LogUsername(m = "Api put product")
-    public ResponseEntity<BaseResponse> put(@PathVariable("id") Long id, @RequestBody @Valid ProductRequest request){
+    public ResponseEntity<BaseResponse> put(@PathVariable("id") Long id, @RequestBody @Valid ProductDto request){
         return ResponseEntity.ok(productService.saveOrUpdate(request,id));
     }
     @DeleteMapping("/{id}")
@@ -44,6 +43,7 @@ public class RestProductController {
     }
 
     @PostMapping("/pages")
+    @LogUsername(m = "Api get pages product")
     public ResponseEntity<BaseResponse> search(@RequestBody ProductSearch search){
         return ResponseEntity.ok(productService.getPage(search));
     }

@@ -2,7 +2,7 @@ package com.tranhuudat.nuclearshop.rest;
 
 import com.tranhuudat.nuclearshop.request.PersonRequest;
 import com.tranhuudat.nuclearshop.request.UserRequest;
-import com.tranhuudat.nuclearshop.request.search.SearchRequest;
+import com.tranhuudat.nuclearshop.dto.search.SearchRequest;
 import com.tranhuudat.nuclearshop.response.BaseResponse;
 import com.tranhuudat.nuclearshop.service.UserService;
 import lombok.AllArgsConstructor;
