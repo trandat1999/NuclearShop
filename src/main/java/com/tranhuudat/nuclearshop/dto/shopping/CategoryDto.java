@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.dto.shopping;
 
+import com.tranhuudat.nuclearshop.dto.BaseDto;
 import com.tranhuudat.nuclearshop.entity.shopping.Category;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
-public class CategoryDto {
+public class CategoryDto extends BaseDto {
     private Long id;
     @NotNull(message = "{nuclearshop.validation.NotNull}")
     private String name;

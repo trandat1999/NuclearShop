@@ -15,6 +15,10 @@ import com.tranhuudat.nuclearshop.service.BaseService;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import com.tranhuudat.nuclearshop.util.SystemVariable;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,11 +31,13 @@ import java.util.Set;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ProductService extends BaseService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final FileRepository fileRepository;
 
+    @Cacheable(value = "Product", key = "#id")
     public BaseResponse get(Long id){
         Optional<Product> optional = productRepository.findById(id);
         if(optional.isPresent()) {
@@ -40,7 +46,7 @@ public class ProductService extends BaseService {
         }
         return getResponse204(null,getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE, SystemVariable.PRODUCT));
     }
-
+    @CacheEvict(value = "Product", key = "#id")
     public BaseResponse delete(Long id){
         Optional<Product> optional = productRepository.findById(id);
         if(optional.isPresent()) {
@@ -53,6 +59,7 @@ public class ProductService extends BaseService {
         return getResponse204(null,getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE, SystemVariable.PRODUCT));
     }
 
+    @CachePut(value = "Product", key = "#id")
     public BaseResponse saveOrUpdate(ProductDto request, Long id){
         Product entity = null;
         if(!ObjectUtils.isEmpty(id)){
@@ -107,6 +114,7 @@ public class ProductService extends BaseService {
                 getMessage(SystemMessage.MESSAGE_FOUND, SystemVariable.PRODUCT));
     }
 
+    @Cacheable(value = "Product", key = "#search")
     public BaseResponse getPage(ProductSearch search){
         Pageable pageable = getPageable(search);
         Page<ProductDto> page = productRepository.getPage(search.getKeyword(),search.getVoided(),  pageable);

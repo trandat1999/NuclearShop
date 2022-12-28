@@ -1,15 +1,17 @@
 package com.tranhuudat.nuclearshop.dto.shopping;
 
+import com.tranhuudat.nuclearshop.dto.BaseDto;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class AdministrativeUnitDto {
+public class AdministrativeUnitDto extends BaseDto {
     @NotNull(message = "{nuclearshop.validation.NotNull}")
     private String name;
 

@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.dto.shopping;
 
+import com.tranhuudat.nuclearshop.dto.BaseDto;
 import com.tranhuudat.nuclearshop.dto.FileDto;
 import com.tranhuudat.nuclearshop.entity.File;
 import com.tranhuudat.nuclearshop.entity.shopping.Category;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ProductDto {
+public class ProductDto extends BaseDto {
     private Long id;
     @NotNull(message = "{nuclear.shop.validation.NotNull}")
     @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
