@@ -18,17 +18,13 @@ import java.util.Set;
 public class Publisher extends BaseEntity {
     @Column(name = "name")
     private String name;
-
     @Column(name = "code")
     private String code;
-
     @Lob
     @Column(name = "description")
     private String description;
-
     @Column(name = "address")
     private String address;
-
     @ManyToOne
     @JoinColumn(name = "administrative_unit_id")
     private AdministrativeUnit administrativeUnit;

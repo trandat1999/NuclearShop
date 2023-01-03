@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="-201.38939189628968" y="42.11210258185987">diagram</node>
+    <node x="-160.067013976525" y="-201.9701609051716">com.tranhuudat.nuclearshop.entity.shopping.Product</node>
+    <node x="-391.06363379617244" y="-210.60693576807893">com.tranhuudat.nuclearshop.entity.shopping.Item</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Compact" zoom="1.5" showDependencies="false" x="-127.5" y="-40.50000000000003" />
+  <SelectedNodes>
+    <node>com.tranhuudat.nuclearshop.entity.shopping.Item</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FileDto extends BaseDto{
+public class FileDto extends BaseDto {
     private Long id;
     private String fileName;
     private Long fileSize;

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 @Configuration
-@EnableRedisRepositories
 @EnableCaching
 @ConditionalOnExpression("${application.caching.enabled}")
 public class RedisConfig {

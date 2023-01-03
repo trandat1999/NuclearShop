@@ -15,6 +15,7 @@ import com.tranhuudat.nuclearshop.service.BaseService;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import com.tranhuudat.nuclearshop.util.SystemVariable;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -30,7 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class ProductService extends BaseService {
     private final ProductRepository productRepository;
