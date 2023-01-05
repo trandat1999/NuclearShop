@@ -60,7 +60,8 @@ public class ProductService extends BaseService {
         return getResponse204(null,getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE, SystemVariable.PRODUCT));
     }
 
-    @CachePut(value = "Product", key = "#id")
+    @CachePut(value = "Product", key = "#p1",condition = "#p1!=null")
+    @CacheEvict(value = "Product",allEntries = true)
     public BaseResponse saveOrUpdate(ProductDto request, Long id){
         Product entity = null;
         if(!ObjectUtils.isEmpty(id)){

@@ -18,7 +18,7 @@ import java.util.Set;
 public class Publisher extends BaseEntity {
     @Column(name = "name")
     private String name;
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     private String code;
     @Lob
     @Column(name = "description")

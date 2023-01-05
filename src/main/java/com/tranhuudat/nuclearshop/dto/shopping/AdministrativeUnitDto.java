@@ -42,7 +42,7 @@ public class AdministrativeUnitDto extends BaseDto {
             this.code = entity.getCode();
             this.englishName = entity.getEnglishName();
             this.name = entity.getName();
-            if(ObjectUtils.isEmpty(entity.getParent())){
+            if(!ObjectUtils.isEmpty(entity.getParent())){
                 this.parent = new AdministrativeUnitDto(entity.getParent());
             }
         }
