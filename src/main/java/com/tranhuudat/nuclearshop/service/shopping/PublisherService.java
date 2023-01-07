@@ -12,6 +12,7 @@ import com.tranhuudat.nuclearshop.service.BaseService;
 import com.tranhuudat.nuclearshop.util.SystemMessage;
 import com.tranhuudat.nuclearshop.util.SystemVariable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,11 +32,12 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
+@CacheConfig(cacheNames={"Publisher"})
 public class PublisherService extends BaseService {
     private final PublisherRepository publisherRepository;
     private final AdministrativeUnitRepository administrativeUnitRepository;
-    @CachePut(value = "Publisher", key = "#p1",condition = "#p1!=null")
-    @CacheEvict(value = "Publisher",allEntries = true)
+    @CachePut(key = "#p1",condition = "#p1!=null")
+    @CacheEvict(allEntries = true,keyGenerator = "")
     public BaseResponse saveOrUpdate(PublisherDto request,Long id){
         long countExistCode = publisherRepository.countExitsCode(request.getCode(),id);
         if(countExistCode>0){
@@ -63,7 +65,7 @@ public class PublisherService extends BaseService {
         entity = publisherRepository.save(entity);
         return getResponse200(new PublisherDto(entity),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
-    @Cacheable(value = "Publisher",key = "#id")
+    @Cacheable(key = "#id")
     public BaseResponse get(Long id){
         Optional<Publisher> optional = publisherRepository.findById(id);
         if(optional.isPresent()){
@@ -71,7 +73,7 @@ public class PublisherService extends BaseService {
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.PUBLISHER));
     }
-    @CacheEvict(value = "Publisher",key = "#id")
+    @CacheEvict(allEntries = true)
     public BaseResponse delete(Long id){
         Optional<Publisher> optional = publisherRepository.findById(id);
         if(optional.isPresent()){
@@ -82,11 +84,11 @@ public class PublisherService extends BaseService {
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.PUBLISHER));
     }
-    @Cacheable(value = "Publisher")
+    @Cacheable()
     public BaseResponse getAll(){
         return getResponse200(publisherRepository.getAll(),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
-    @Cacheable("Publisher")
+    @Cacheable(key = "#search.hashCode()")
     public BaseResponse search(PublisherSearch search){
         Page<PublisherDto> page = publisherRepository.getPage(search.getKeyword(), search.getVoided(),
                 search.getProvinceId(),search.getDistrictId(),search.getCommuneId(),getPageable(search));
