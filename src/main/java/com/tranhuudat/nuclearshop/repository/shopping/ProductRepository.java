@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
+    @Query(value = "select count(entity.id) from Product entity where (:id is null or entity.id <> :id) " +
+            "and (:code is null or entity.code = :code)")
+    long countExitsCode(String code, Long id);
     @Query(value = "Select new com.tranhuudat.nuclearshop.dto.shopping.ProductDto(entity)" +
             " from Product entity where " +
             " (:voided is null or entity.voided = :voided) " +

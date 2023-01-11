@@ -1,5 +1,6 @@
 package com.tranhuudat.nuclearshop.util.component;
 
+import com.tranhuudat.nuclearshop.util.ConstUtil;
 import com.tranhuudat.nuclearshop.util.anotation.LogUsername;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,7 +25,7 @@ public class LogUsernameAOP {
         MethodSignature signature = (MethodSignature) call.getSignature();
         Method method = signature.getMethod();
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-        String params = "";
+        StringBuilder params = new StringBuilder();
         assert args.length == parameterAnnotations.length;
         for(int i = 0; i < args.length; i++){
             for (Annotation annotation : parameterAnnotations[i]) {
@@ -32,12 +33,12 @@ public class LogUsernameAOP {
                     continue;
                 }
                 PathVariable pathVariable = (PathVariable) annotation;
-                params += pathVariable.value() + "= " + args[i];
+                params.append(pathVariable.value()).append(ConstUtil.EQUAL).append(ConstUtil.SPACE).append(args[i]);
             }
         }
         LogUsername logUsername = method.getAnnotation(LogUsername.class);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info(logUsername.m() +" " + params +" by username: {}",username);
+        log.info(logUsername.m() +ConstUtil.SPACE + params +" by username: {}",username);
         return call.proceed();
     }
 }

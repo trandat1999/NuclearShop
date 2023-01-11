@@ -27,9 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +62,11 @@ public class ProductService extends BaseService {
     @CachePut(key = "#p1",condition = "#p1!=null")
     @CacheEvict(allEntries = true)
     public BaseResponse saveOrUpdate(ProductDto request, Long id){
+        long countExistCode = productRepository.countExitsCode(request.getCode(),id);
+        if(countExistCode>0){
+            Map<String,String> errors = Collections.singletonMap(SystemVariable.CODE, getMessage(SystemMessage.MESSAGE_ERROR_EXISTS, request.getCode()));
+            return getResponse400(SystemMessage.MESSAGE_BAD_REQUEST,errors);
+        }
         Product entity = null;
         if(!ObjectUtils.isEmpty(id)){
             entity = productRepository.findById(id).orElse(null);

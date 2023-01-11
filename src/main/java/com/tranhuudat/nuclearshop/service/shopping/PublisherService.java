@@ -37,7 +37,7 @@ public class PublisherService extends BaseService {
     private final PublisherRepository publisherRepository;
     private final AdministrativeUnitRepository administrativeUnitRepository;
     @CachePut(key = "#p1",condition = "#p1!=null")
-    @CacheEvict(allEntries = true,keyGenerator = "")
+    @CacheEvict(allEntries = true)
     public BaseResponse saveOrUpdate(PublisherDto request,Long id){
         long countExistCode = publisherRepository.countExitsCode(request.getCode(),id);
         if(countExistCode>0){
@@ -69,7 +69,7 @@ public class PublisherService extends BaseService {
     public BaseResponse get(Long id){
         Optional<Publisher> optional = publisherRepository.findById(id);
         if(optional.isPresent()){
-            return getResponse200(new PublisherDto(optional.get()),getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.PUBLISHER));
+            return getResponse200(new PublisherDto(optional.get()),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.PUBLISHER));
     }
@@ -80,7 +80,7 @@ public class PublisherService extends BaseService {
             Publisher entity = optional.get();
             entity.setVoided(true);
             entity = publisherRepository.save(entity);
-            return getResponse200(new PublisherDto(entity),getMessage(SystemMessage.MESSAGE_FOUND,SystemVariable.PUBLISHER));
+            return getResponse200(new PublisherDto(entity),getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
         }
         return getResponse400(getMessage(SystemMessage.MESSAGE_NOT_FOUND_IN_DATABASE,SystemVariable.PUBLISHER));
     }
@@ -92,6 +92,6 @@ public class PublisherService extends BaseService {
     public BaseResponse search(PublisherSearch search){
         Page<PublisherDto> page = publisherRepository.getPage(search.getKeyword(), search.getVoided(),
                 search.getProvinceId(),search.getDistrictId(),search.getCommuneId(),getPageable(search));
-        return getResponse200(page,getMessage(SystemMessage.MESSAGE_FOUND, SystemVariable.PRODUCT));
+        return getResponse200(page,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
 }
