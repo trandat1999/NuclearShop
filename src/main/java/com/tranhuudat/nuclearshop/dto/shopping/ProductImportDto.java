@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.ObjectUtils;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * A DTO for the {@link com.tranhuudat.nuclearshop.entity.shopping.ProductImport} entity
  * @author DatNuclear on 03/01/2023
@@ -17,8 +20,12 @@ import org.springframework.util.ObjectUtils;
 @NoArgsConstructor
 public class ProductImportDto extends BaseDto {
     private Long id;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
     private ProductDto product;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
     private Double price;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
+    @Min(value = 1,message = "{nuclear.shop.validation.Min}")
     private Long quantity;
     private OrderImportDto orderImport;
     public ProductImportDto(ProductImport entity) {

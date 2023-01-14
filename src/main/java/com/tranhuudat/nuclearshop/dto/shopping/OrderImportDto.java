@@ -4,12 +4,17 @@ import com.tranhuudat.nuclearshop.dto.BaseDto;
 import com.tranhuudat.nuclearshop.entity.shopping.OrderImport;
 import com.tranhuudat.nuclearshop.entity.shopping.ProductImport;
 import com.tranhuudat.nuclearshop.type.OrderImportStatus;
+import com.tranhuudat.nuclearshop.util.anotation.NotNullIfAnotherFieldHasValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,15 +27,29 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@NotNullIfAnotherFieldHasValue(
+        fieldName = "status",
+        fieldValue = OrderImportStatus.Constants.FINISHED,
+        dependFieldName = "dateFinished")
 public class OrderImportDto extends BaseDto {
     private Long id;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
+    @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
     private Date orderDate;
     private String staffOrder;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
+    @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
     private OrderImportStatus status;
     private String staffFinished;
     private Date dateFinished;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
     private WarehouseDto warehouse;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
     private PublisherDto publisher;
+    @NotNull(message = "{nuclear.shop.validation.NotNull}")
+    @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
+    @NotEmpty(message = "{nuclear.shop.validation.NotEmpty}")
+    @Valid
     private List<ProductImportDto> products = new ArrayList<>();
 
     public OrderImportDto(OrderImport entity) {

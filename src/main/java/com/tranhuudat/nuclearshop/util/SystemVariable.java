@@ -20,4 +20,5 @@ public class SystemVariable {
     public static final String PRODUCT = "Product";
     public static final String PUBLISHER = "Publisher";
     public static final String WAREHOUSE = "Warehouse";
+    public static final String ORDER_IMPORT = "Order Import";
 }

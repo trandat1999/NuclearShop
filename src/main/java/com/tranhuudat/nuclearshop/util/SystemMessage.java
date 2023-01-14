@@ -31,6 +31,7 @@ public class SystemMessage {
 
     public static final String MESSAGE_INVALID_LENGTH = "nuclear.shop.message.InvalidLength";
     public static final String MESSAGE_IMPORT_SUCCESS = "nuclear.shop.message.import.success";
+    public static final String MESSAGE_CAN_NOT_DELETE = "nuclear.shop.message.can.not.delete";
 
     //message app
     public static final String CONTENT_MAIL_REGISTER = "Thanks for registering your account. Link activity will be expired after 5 minutes";

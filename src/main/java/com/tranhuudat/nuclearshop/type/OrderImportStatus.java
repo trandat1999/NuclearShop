@@ -5,5 +5,10 @@ package com.tranhuudat.nuclearshop.type;
  * @project NuclearShop
  */
 public enum OrderImportStatus {
-    NEW,PAID,FINISHED
+    NEW,PAID,FINISHED;
+    public static class Constants {
+        public static final String NEW = "NEW";
+        public static final String PAID = "PAID";
+        public static final String FINISHED = "FINISHED";
+    }
 }
