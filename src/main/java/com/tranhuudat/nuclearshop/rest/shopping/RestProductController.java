@@ -18,12 +18,16 @@ import javax.validation.Valid;
 @PreAuthorize("hasAnyAuthority(T(com.tranhuudat.nuclearshop.util.ConstUtil).ADMIN_ROLE)")
 @RequestMapping("/api/v1/products")
 public class RestProductController {
-
     private final ProductService productService;
     @PostMapping
     @LogUsername(m = "Api save product")
     public ResponseEntity<BaseResponse> save(@RequestBody @Valid ProductDto request){
         return ResponseEntity.ok(productService.saveOrUpdate(request,null));
+    }
+    @GetMapping
+    @LogUsername(m = "Api get all product")
+    public ResponseEntity<BaseResponse> getAll(){
+        return ResponseEntity.ok(productService.getAll());
     }
     @GetMapping("/{id}")
     @LogUsername(m = "Api get product")

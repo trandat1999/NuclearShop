@@ -21,6 +21,6 @@ public interface CurrentUserResponse {
 
         String getFirstName();
 
-        File getPhotoFile();
+        FileResponse getPhotoFile();
     }
 }

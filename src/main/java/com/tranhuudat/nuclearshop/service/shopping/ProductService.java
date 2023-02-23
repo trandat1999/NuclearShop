@@ -126,4 +126,10 @@ public class ProductService extends BaseService {
         Page<ProductDto> page = productRepository.getPage(search.getKeyword(),search.getVoided(),  pageable);
         return getResponse200(page,getMessage(SystemMessage.MESSAGE_FOUND, SystemVariable.PRODUCT));
     }
+
+    @Cacheable
+    public BaseResponse getAll(){
+        List<ProductDto> rs = productRepository.getAll();
+        return getResponse200(rs,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
+    }
 }

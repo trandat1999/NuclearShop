@@ -123,8 +123,8 @@ public class OrderImportService extends BaseService {
     }
     @Cacheable(key = "#search.hashCode()")
     public BaseResponse search(OrderImportSearch search){
-//        Page<OrderImportDto> page = orderImportRepository.getPage(search.getKeyword(),search.getFromDate(),
-//                search.getToDate(),search.getPublisherId(),search.getWarehouseId(),getPageable(search));
-        return getResponse200(null,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
+        Page<OrderImportDto> page = orderImportRepository.getPage(search.getKeyword(),search.getFromDate(),
+                search.getToDate(),search.getPublisherId(),search.getWarehouseId(),getPageable(search));
+        return getResponse200(page,getMessage(SystemMessage.MESSAGE_SUCCESS_PROPERTIES));
     }
 }

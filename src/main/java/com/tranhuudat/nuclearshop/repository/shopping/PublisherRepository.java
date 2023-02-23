@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author DatNuclear on 03/01/2023
  * @project NuclearShop
@@ -18,7 +20,7 @@ public interface PublisherRepository extends JpaRepository<Publisher,Long> {
             "and (:code is null or entity.code = :code)")
     long countExitsCode(String code, Long id);
     @Query(value="select new com.tranhuudat.nuclearshop.dto.shopping.PublisherDto(entity) from Publisher entity where entity.voided is null or entity.voided = false")
-    PublisherDto getAll();
+    List<PublisherDto> getAll();
 
     @Query(value = "select new com.tranhuudat.nuclearshop.dto.shopping.PublisherDto(entity) from Publisher entity " +
             "where (:keyword is null or :keyword = '' or entity.name like concat('%',:keyword,'%') or entity.code like concat('%',:keyword,'%')) " +

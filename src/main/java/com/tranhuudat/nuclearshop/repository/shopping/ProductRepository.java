@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select count(entity.id) from Product entity where (:id is null or entity.id <> :id) " +
@@ -24,4 +26,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             " and (:voided is null and (entity.voided is null or entity.voided = false )) " +
             " and (:keyword is null or entity.name like concat('%',:keyword,'%') or entity.code like concat('%',:keyword,'%'))")
     Page<ProductDto> getPage(String keyword, Boolean voided, Pageable pageable);
+
+    @Query(value = "Select new com.tranhuudat.nuclearshop.dto.shopping.ProductDto(entity)" +
+            " from Product entity where (entity.voided is null or entity.voided = false) ")
+    List<ProductDto> getAll();
 }
