@@ -95,7 +95,7 @@ public class UserService extends BaseService {
         user.setPerson(person);
         user.setRoles(roles);
         if(id == null){
-            user.setUsername(user.getUsername());
+            user.setUsername(userRequest.getUsername());
             user.setEnabled(false);
         }else {
             user.setEnabled(userRequest.getEnabled());
