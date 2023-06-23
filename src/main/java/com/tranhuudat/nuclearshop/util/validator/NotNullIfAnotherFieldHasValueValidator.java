@@ -33,7 +33,7 @@ public class NotNullIfAnotherFieldHasValueValidator implements ConstraintValidat
         try {
             Object fieldValue       = BeanUtils.getProperty(value, fieldName);
             Object dependFieldValue = BeanUtils.getProperty(value, dependFieldName);
-            if(expectedFieldValue== null && fieldValue!=null && dependFieldValue == null){
+            if(expectedFieldValue== null && fieldValue==null && dependFieldValue == null){
                 ctx.disableDefaultConstraintViolation();
                 ctx.buildConstraintViolationWithTemplate(ctx.getDefaultConstraintMessageTemplate())
                         .addNode(dependFieldName)

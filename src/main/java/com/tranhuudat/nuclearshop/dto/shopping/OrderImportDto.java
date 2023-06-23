@@ -34,11 +34,9 @@ import java.util.List;
 public class OrderImportDto extends BaseDto {
     private Long id;
     @NotNull(message = "{nuclear.shop.validation.NotNull}")
-    @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
     private Date orderDate;
     private String staffOrder;
     @NotNull(message = "{nuclear.shop.validation.NotNull}")
-    @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
     private OrderImportStatus status;
     private String staffFinished;
     private Date dateFinished;
@@ -47,7 +45,6 @@ public class OrderImportDto extends BaseDto {
     @NotNull(message = "{nuclear.shop.validation.NotNull}")
     private PublisherDto publisher;
     @NotNull(message = "{nuclear.shop.validation.NotNull}")
-    @NotBlank(message = "{nuclear.shop.validation.NotBlank}")
     @NotEmpty(message = "{nuclear.shop.validation.NotEmpty}")
     @Valid
     private List<ProductImportDto> products = new ArrayList<>();

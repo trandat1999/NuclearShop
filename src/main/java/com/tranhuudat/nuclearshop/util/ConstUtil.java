@@ -37,8 +37,8 @@ public class ConstUtil {
     public static final String COLON = ":";
     public static final String DASH = "-";
 
-    public static final long TIMEOUT_TOKEN = 300L;
-    public static final long TIMEOUT_REFRESH_TOKEN = 1800L;
+    public static final long TIMEOUT_TOKEN = 3000L;
+    public static final long TIMEOUT_REFRESH_TOKEN = 18000L;
     public static String FILE_PATH_IMAGE = "";
     public static String HOST_URL = "http://localhost:8080";
     public static String URL_VERIFICATION_TOKEN = "auth/accountVerification";

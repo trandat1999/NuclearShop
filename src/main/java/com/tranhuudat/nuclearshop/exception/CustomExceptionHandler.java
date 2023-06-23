@@ -33,9 +33,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     //handler exception when not define
     @ExceptionHandler({Exception.class})
     public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, WebRequest request) {
+        log.error(ex.getMessage());
         ErrorResponse error = ErrorResponse.builder()
                 .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .message(ex.getLocalizedMessage())
+                .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value() + "")
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -45,6 +46,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {IllegalStateException.class, IllegalArgumentException.class, IllegalAccessException.class,
             DataIntegrityViolationException.class, NuclearShopException.class, UsernameNotFoundException.class})
     public final ResponseEntity<ErrorResponse> handleAllException(Exception ex, WebRequest request) {
+        log.error(ex.getMessage());
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .path(((ServletWebRequest) request).getRequest().getRequestURI())
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value() + "")
@@ -57,6 +59,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {DisabledException.class, BadCredentialsException.class})
     public final ResponseEntity<ErrorResponse> handleSecurityException(Exception ex, WebRequest request) {
+        log.error(ex.getMessage());
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .path(((ServletWebRequest) request).getRequest().getRequestURI())
                 .code(HttpStatus.BAD_REQUEST.value() + "")
@@ -69,6 +72,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({AccessDeniedException.class})
     public final ResponseEntity<ErrorResponse> handle403Exception(Exception ex, WebRequest request) {
+        log.error(ex.getMessage());
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .path(((ServletWebRequest) request).getRequest().getRequestURI())
                 .code(HttpStatus.FORBIDDEN.value() + "")
@@ -82,6 +86,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.error(ex.getMessage());
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach((error) -> {
             String fieldName = error.getField();

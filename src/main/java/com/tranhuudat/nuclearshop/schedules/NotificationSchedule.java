@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class NotificationSchedule {
     private final SimpMessagingTemplate template;
-    @Scheduled(fixedDelay = 5000)
+//    @Scheduled(fixedDelay = 5000)
     public void autoScheduleNotification(){
         template.convertAndSendToUser("admin","/topic/notification","abcd");
     }
