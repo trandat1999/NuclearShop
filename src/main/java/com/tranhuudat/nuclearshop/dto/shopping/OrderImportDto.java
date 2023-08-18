@@ -63,6 +63,12 @@ public class OrderImportDto extends BaseDto {
                     products.add(new ProductImportDto(productImport));
                 }
             }
+            if(entity.getWarehouse()!=null){
+                this.warehouse = new WarehouseDto(entity.getWarehouse());
+            }
+            if(entity.getPublisher()!=null){
+                this.publisher = new PublisherDto(entity.getPublisher());
+            }
         }
     }
 }

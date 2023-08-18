@@ -46,6 +46,6 @@ public class RestOrderImportController {
     @LogUsername(m = "Api delete order imports")
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id){
-        return ResponseEntity.ok(orderImportService.get(id));
+        return ResponseEntity.ok(orderImportService.delete(id));
     }
 }
