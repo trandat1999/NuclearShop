@@ -16,6 +16,7 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+    <packaging>jar</packaging>
     <dependencies>
 
         <dependency>
@@ -169,6 +170,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>nuclear-shop</finalName>
     </build>
 
 </project>

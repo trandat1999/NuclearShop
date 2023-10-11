@@ -20,13 +20,19 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
 
 import javax.annotation.Resource;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 public abstract class BaseService {
 
     protected ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
 
+    @Resource
+    private Validator validator;
     @Resource
     private MessageSource messageSource;
     @Resource
@@ -150,5 +156,16 @@ public abstract class BaseService {
             pageSize = searchRequest.getPageSize();
         }
         return PageRequest.of(pageIndex, pageSize);
+    }
+
+    protected HashMap<String, String> validation(Object object){
+        HashMap<String, String> rs = new HashMap<>();
+        Set<ConstraintViolation<Object>> violations = validator.validate(object);
+        if (!violations.isEmpty()) {
+            for (ConstraintViolation<Object> constraintViolation : violations) {
+                rs.put(constraintViolation.getPropertyPath().toString(),constraintViolation.getMessage());
+            }
+        }
+        return rs;
     }
 }
