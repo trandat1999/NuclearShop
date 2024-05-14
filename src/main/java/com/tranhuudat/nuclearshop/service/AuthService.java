@@ -102,10 +102,10 @@ public class AuthService extends BaseService {
     }
 
     public AuthResponse login(LoginRequest loginRequest) {
-        boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
-        if(!captchaVerified) {
-            return null;
-        }
+//        boolean captchaVerified = captchaService.verify(loginRequest.getRecaptchaResponse());
+//        if(!captchaVerified) {
+//            return null;
+//        }
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
